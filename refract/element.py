@@ -2,11 +2,11 @@ from collections import namedtuple
 
 
 class Element(object):
-    def __init__(self, element, content=None):
+    def __init__(self, element: str, content=None):
         self.element = element
         self.content = content
 
-    def as_dict(self):
+    def as_dict(self) -> dict:
         element = {
             'element': self.element,
         }
@@ -101,23 +101,23 @@ MemberContent = namedtuple('MemberContent', ['key', 'value'])
 class Member(Element):
     element = 'member'
 
-    def __init__(self, key=None, value=None):
+    def __init__(self, key: Element=None, value: Element=None):
         super(Member, self).__init__('member', MemberContent(key, value))
 
     @property
-    def key(self):
+    def key(self) -> Element:
         return self.content.key
 
     @key.setter
-    def key(self, key):
+    def key(self, key: Element):
         self.content = MemberContent(key=key, value=self.value)
 
     @property
-    def value(self):
+    def value(self) -> Element:
         return self.content.value
 
     @value.setter
-    def value(self, value):
+    def value(self, value: Element) -> Element:
         self.content = MemberContent(key=self.key, value=value)
 
 
