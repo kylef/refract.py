@@ -132,3 +132,19 @@ class Array(Element):
 
     def __getitem__(self, index):
         return self.content.__getitem__(index)
+
+
+class Object(Element):
+    element = 'object'
+
+    def __init__(self, content=None):
+        super(Object, self).__init__('object', content=content)
+
+    def __len__(self):
+        return len(self.content)
+
+    def keys(self):
+        return [element.key for element in self.content]
+
+    def values(self):
+        return [element.value for element in self.content]
