@@ -1,10 +1,10 @@
 import unittest
-from refract import Element
+from refract import Namespace, Element
 
 
 class DeserialisationTests(unittest.TestCase):
     def test_deserialise_string(self):
-        element = Element.from_dict({
+        element = Namespace().from_dict({
             'element': 'string',
             'content': 'Hello World'
         })
@@ -13,7 +13,7 @@ class DeserialisationTests(unittest.TestCase):
         self.assertEqual(element.content, 'Hello World')
 
     def test_deserialise_number(self):
-        element = Element.from_dict({
+        element = Namespace().from_dict({
             'element': 'number',
             'content': 3
         })
@@ -22,14 +22,17 @@ class DeserialisationTests(unittest.TestCase):
         self.assertEqual(element.content, 3)
 
     def test_deserialise_boolean(self):
-        element = Element.from_tuple(['boolean', [], [], True])
+        element = Namespace().from_dict({
+            'element': 'boolean',
+            'content': True
+        })
 
         self.assertEqual(element.element, 'boolean')
         self.assertEqual(element.content, True)
 
 
     def test_deserialise_null(self):
-        element = Element.from_dict({
+        element = Namespace().from_dict({
             'element': 'null',
             'content': None
         })
@@ -38,7 +41,7 @@ class DeserialisationTests(unittest.TestCase):
         self.assertEqual(element.content, None)
 
     def test_deserialise_object(self):
-        element = Element.from_dict({
+        element = Namespace().from_dict({
             'element': 'object',
             'content': [
                 {
@@ -77,7 +80,7 @@ class DeserialisationTests(unittest.TestCase):
         self.assertEqual(value.content, 'Hello World')
 
     def test_deserialise_array(self):
-        element = Element.from_dict({
+        element = Namespace().from_dict({
             'element': 'array',
             'content': [
                 {
@@ -95,7 +98,7 @@ class DeserialisationTests(unittest.TestCase):
         self.assertEqual(element.content[0].content, 'Hello World')
 
     def test_deserailise_custom(self):
-        element = Element.from_dict({
+        element = Namespace().from_dict({
             'element': 'custom',
             'content': {
                 'element': 'string',
