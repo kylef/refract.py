@@ -23,7 +23,7 @@ class Element(object):
 
                 element['content'] = content
             elif isinstance(self.content, list):
-                element['content'] = map(lambda e: e.as_dict(), self.content)
+                element['content'] = [e.as_dict() for e in self.content]
             elif isinstance(self.content, Element):
                 element['content'] = self.content.as_dict()
             else:
@@ -48,7 +48,7 @@ class Element(object):
             content = element_dict['content']
 
             if isinstance(content, list):
-                element.content = map(namespace.from_dict, content)
+                element.content = [namespace.from_dict(e) for e in content]
             elif isinstance(content, dict):
                 if element.element == 'member':
                     key = content.get('key')
