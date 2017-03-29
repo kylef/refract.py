@@ -1,5 +1,5 @@
 import unittest
-from refract import Namespace, Element
+from refract import Namespace, Element, String, Number, Boolean, Null
 
 
 class DeserialisationTests(unittest.TestCase):
@@ -9,6 +9,7 @@ class DeserialisationTests(unittest.TestCase):
             'content': 'Hello World'
         })
 
+        self.assertIsInstance(element, String)
         self.assertEqual(element.element, 'string')
         self.assertEqual(element.content, 'Hello World')
 
@@ -18,6 +19,7 @@ class DeserialisationTests(unittest.TestCase):
             'content': 3
         })
 
+        self.assertIsInstance(element, Number)
         self.assertEqual(element.element, 'number')
         self.assertEqual(element.content, 3)
 
@@ -27,6 +29,7 @@ class DeserialisationTests(unittest.TestCase):
             'content': True
         })
 
+        self.assertIsInstance(element, Boolean)
         self.assertEqual(element.element, 'boolean')
         self.assertEqual(element.content, True)
 
@@ -37,6 +40,7 @@ class DeserialisationTests(unittest.TestCase):
             'content': None
         })
 
+        self.assertIsInstance(element, Null)
         self.assertEqual(element.element, 'null')
         self.assertEqual(element.content, None)
 

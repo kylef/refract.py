@@ -38,11 +38,11 @@ class Element(object):
         return element
 
     @classmethod
-    def from_dict(self, element_dict):
+    def from_dict(cls, element_dict):
         if 'element' not in element_dict:
             raise ValueError('Given element does not contain an element property')
 
-        element = Element(element_dict['element'])
+        element = cls(element_dict['element'])
 
         if 'content' in element_dict:
             content = element_dict['content']
@@ -69,3 +69,19 @@ class Element(object):
         # TODO attributes
 
         return element
+
+
+class String(Element):
+    element = 'string'
+
+
+class Number(Element):
+    element = 'number'
+
+
+class Boolean(Element):
+    element = 'boolean'
+
+
+class Null(Element):
+    element = 'null'
