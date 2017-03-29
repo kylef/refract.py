@@ -119,3 +119,16 @@ class Member(Element):
     @value.setter
     def value(self, value):
         self.content = MemberContent(key=self.key, value=value)
+
+
+class Array(Element):
+    element = 'array'
+
+    def __init__(self, content=None):
+        super(Array, self).__init__('array', content=content)
+
+    def __len__(self):
+        return len(self.content)
+
+    def __getitem__(self, index):
+        return self.content.__getitem__(index)
