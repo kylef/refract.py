@@ -1,5 +1,5 @@
 import unittest
-from refract import Element, MemberContent
+from refract import Element, KeyValuePair
 
 
 class SerialisationTests(unittest.TestCase):
@@ -33,7 +33,7 @@ class SerialisationTests(unittest.TestCase):
 
     def test_serialise_object(self):
         element = Element('object', content=[
-            Element('member', content=MemberContent(
+            Element('member', content=KeyValuePair(
                 key=Element('string', content='id'),
                 value=Element('string', content='Hello World')
             ))

@@ -12,7 +12,7 @@ class Element(object):
         }
 
         if self.content or self.element == "null":
-            if isinstance(self.content, MemberContent):
+            if isinstance(self.content, KeyValuePair):
                 content = {}
 
                 if self.content.key:
@@ -97,12 +97,12 @@ class Null(Element):
         super(Null, self).__init__('null', content=None)
 
 
-MemberContent = namedtuple('MemberContent', ['key', 'value'])
+KeyValuePair = namedtuple('KeyValuePair', ['key', 'value'])
 class Member(Element):
     element = 'member'
 
     def __init__(self, key: Element=None, value: Element=None):
-        super(Member, self).__init__('member', MemberContent(key, value))
+        super(Member, self).__init__('member', KeyValuePair(key, value))
 
     @property
     def key(self) -> Element:
@@ -110,7 +110,7 @@ class Member(Element):
 
     @key.setter
     def key(self, key: Element):
-        self.content = MemberContent(key=key, value=self.value)
+        self.content = KeyValuePair(key=key, value=self.value)
 
     @property
     def value(self) -> Element:
@@ -118,7 +118,7 @@ class Member(Element):
 
     @value.setter
     def value(self, value: Element) -> Element:
-        self.content = MemberContent(key=self.key, value=value)
+        self.content = KeyValuePair(key=self.key, value=value)
 
 
 class Array(Element):
