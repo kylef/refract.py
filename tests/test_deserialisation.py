@@ -1,5 +1,5 @@
 import unittest
-from refract import Namespace, Element, String, Number, Boolean, Null
+from refract import Namespace, Element, String, Number, Boolean, Null, Array
 from refract.json import JSONDeserialiser
 
 
@@ -125,3 +125,115 @@ class DeserialisationTests(unittest.TestCase):
         self.assertEqual(element.element, 'custom')
         self.assertIsInstance(element.content, Element)
         self.assertEqual(element.content.content, 'Hello')
+
+    def test_deserialise_meta_id(self):
+        element = self.deserialise({
+            'element': 'string',
+            'meta': {
+                'id': {
+                    'element': 'string',
+                    'content': 'Hello'
+                }
+            }
+        })
+
+        self.assertIsInstance(element, Element)
+        self.assertIsInstance(element.id, String)
+        self.assertEqual(element.id.content, 'Hello')
+
+    def test_deserialise_meta_title(self):
+        element = self.deserialise({
+            'element': 'string',
+            'meta': {
+                'title': {
+                    'element': 'string',
+                    'content': 'Hello'
+                }
+            }
+        })
+
+        self.assertIsInstance(element, Element)
+        self.assertIsInstance(element.title, String)
+        self.assertEqual(element.title.content, 'Hello')
+
+    def test_deserialise_meta_description(self):
+        element = self.deserialise({
+            'element': 'string',
+            'meta': {
+                'description': {
+                    'element': 'string',
+                    'content': 'Hello'
+                }
+            }
+        })
+
+        self.assertIsInstance(element, Element)
+        self.assertIsInstance(element.description, String)
+        self.assertEqual(element.description.content, 'Hello')
+
+    def test_deserialise_meta_links(self):
+        element = self.deserialise({
+            'element': 'string',
+            'meta': {
+                'links': {
+                    'element': 'array',
+                    'content': []
+                }
+            }
+        })
+
+        self.assertIsInstance(element, Element)
+        self.assertIsInstance(element.links, Array)
+
+    def test_deserialise_meta_classes(self):
+        element = self.deserialise({
+            'element': 'string',
+            'meta': {
+                'classes': {
+                    'element': 'array',
+                    'content': [
+                        {
+                            'element': 'string',
+                            'content': 'warning',
+                        }
+                    ]
+                }
+            }
+        })
+
+        self.assertIsInstance(element, Element)
+        self.assertIsInstance(element.classes, Array)
+        self.assertIsInstance(element.classes.content[0], String)
+
+    def test_deserialise_meta_ref(self):
+        element = self.deserialise({
+            'element': 'string',
+            'meta': {
+                'ref': {
+                    'element': 'elementPointer',
+                    'content': 'Test'
+                }
+            }
+        })
+
+        self.assertIsInstance(element, Element)
+        self.assertIsInstance(element.ref, Element)
+        self.assertEqual(element.ref.element, 'elementPointer')
+        self.assertEqual(element.ref.content, 'Test')
+
+    def test_deserialise_attributes(self):
+        element = self.deserialise({
+            'element': 'string',
+            'attributes': {
+                'test': {
+                    'element': 'string',
+                    'content': 'Hello'
+                }
+            }
+        })
+
+        self.assertIsInstance(element, Element)
+        test_element = element.attributes['test']
+        self.assertIsInstance(test_element, Element)
+        self.assertEqual(test_element.element, 'string')
+        self.assertEqual(test_element.content, 'Hello')

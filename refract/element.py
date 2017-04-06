@@ -18,39 +18,53 @@ class Element(object):
         self.attributes = attributes or {}
         self.content = content
 
-    @classmethod
-    def from_dict(cls, namespace, element_dict):
-        if 'element' not in element_dict:
-            raise ValueError('Given element does not contain an element property')
+    @property
+    def id(self):
+        return self.meta.id
 
-        if hasattr(cls, 'element'):
-            element = cls()
-        else:
-            element = cls(element_dict['element'])
+    @id.setter
+    def id(self, new_value):
+        self.meta.id = new_valid
 
-        if 'content' in element_dict:
-            content = element_dict['content']
+    @property
+    def title(self):
+        return self.meta.title
 
-            if isinstance(content, list):
-                element.content = [namespace.from_dict(e) for e in content]
-            elif isinstance(content, dict):
-                if element.element == 'member':
-                    key = content.get('key')
-                    if key:
-                        element.key = namespace.from_dict(key)
+    @title.setter
+    def title(self, new_value):
+        self.meta.title = new_valid
 
-                    value = content.get('value')
-                    if value:
-                        element.value = namespace.from_dict(value)
-                else:
-                    element.content = namespace.from_dict(content)
-            else:
-                element.content = content
+    @property
+    def description(self):
+        return self.meta.description
 
-        # TODO meta
-        # TODO attributes
+    @description.setter
+    def description(self, new_value):
+        self.meta.description = new_valid
 
-        return element
+    @property
+    def ref(self):
+        return self.meta.ref
+
+    @ref.setter
+    def ref(self, new_value):
+        self.meta.ref = new_valid
+
+    @property
+    def links(self):
+        return self.meta.links
+
+    @links.setter
+    def links(self, new_value):
+        self.meta.links = new_valid
+
+    @property
+    def classes(self):
+        return self.meta.classes
+
+    @classes.setter
+    def classes(self, new_value):
+        self.meta.classes = new_valid
 
 
 class String(Element):

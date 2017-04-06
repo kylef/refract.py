@@ -1,5 +1,5 @@
 import json
-from refract.element import KeyValuePair, Element
+from refract.element import KeyValuePair, Element, Metadata
 
 
 class JSONSerialiser:
@@ -72,6 +72,36 @@ class JSONDeserialiser:
 
         return Element
 
+    def deserialise_meta(self, element_dict):
+        meta = Metadata()
+
+        if 'meta' in element_dict:
+            if 'id' in element_dict['meta']:
+                meta.id = self.deserialise_dict(element_dict['meta']['id'])
+
+            if 'title' in element_dict['meta']:
+                meta.title = self.deserialise_dict(element_dict['meta']['title'])
+
+            if 'description' in element_dict['meta']:
+                meta.description = self.deserialise_dict(element_dict['meta']['description'])
+
+            if 'ref' in element_dict['meta']:
+                meta.ref = self.deserialise_dict(element_dict['meta']['ref'])
+
+            if 'classes' in element_dict['meta']:
+                meta.classes = self.deserialise_dict(element_dict['meta']['classes'])
+
+            if 'links' in element_dict['meta']:
+                meta.links = self.deserialise_dict(element_dict['meta']['links'])
+
+        return meta
+
+    def deserialise_attributes(self, element_dict):
+        if 'attributes' in element_dict:
+            return dict([(k, self.deserialise_dict(v)) for (k, v) in element_dict['attributes'].items()])
+
+        return {}
+
     def deserialise_dict(self, element_dict):
         if 'element' not in element_dict:
             raise ValueError('Given element does not contain an element property')
@@ -102,8 +132,8 @@ class JSONDeserialiser:
             else:
                 element.content = content
 
-        # TODO meta
-        # TODO attributes
+        element.meta = self.deserialise_meta(element_dict)
+        element.attributes = self.deserialise_attributes(element_dict)
 
         return element
 
