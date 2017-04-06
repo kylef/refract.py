@@ -4,9 +4,9 @@ from refract import Array, String
 
 class ArrayTests(unittest.TestCase):
     def setUp(self):
-        self.title = String('title')
-        self.hello = String('hello')
-        self.array = Array([self.title, self.hello])
+        self.title = String(content='title')
+        self.hello = String(content='hello')
+        self.array = Array(content=[self.title, self.hello])
 
     def test_initialisation(self):
         self.assertEqual(self.array.content, [self.title, self.hello])

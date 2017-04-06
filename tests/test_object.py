@@ -7,7 +7,7 @@ class ObjectTests(unittest.TestCase):
         self.key = String('title')
         self.value = String('hello')
         self.member = Member(key=self.key, value=self.value)
-        self.object = Object([self.member])
+        self.object = Object(content=[self.member])
 
     def test_initialisation(self):
         self.assertEqual(self.object.content, [self.member])

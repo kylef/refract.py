@@ -1,5 +1,5 @@
 import unittest
-from refract import Element, KeyValuePair
+from refract import Element, String, Array, Metadata, KeyValuePair
 
 
 class SerialisationTests(unittest.TestCase):
@@ -59,7 +59,7 @@ class SerialisationTests(unittest.TestCase):
 
     def test_serialise_array(self):
         element = Element('array', content=[
-            Element('string', 'Hello World')
+            Element('string', content='Hello World')
         ])
 
         self.assertEqual(element.as_dict(), {
@@ -79,5 +79,87 @@ class SerialisationTests(unittest.TestCase):
             'content': {
                 'element': 'string',
                 'content': 'Hello'
+            }
+        })
+
+    def test_serialise_meta_id(self):
+        element = Element('string', meta=Metadata(id=String(content='Test')))
+        self.assertEqual(element.as_dict(), {
+            'element': 'string',
+            'meta': {
+                'id': {
+                    'element': 'string',
+                    'content': 'Test'
+                }
+            }
+        })
+
+    def test_serialise_meta_title(self):
+        element = Element('string', meta=Metadata(title=String(content='Test')))
+        self.assertEqual(element.as_dict(), {
+            'element': 'string',
+            'meta': {
+                'title': {
+                    'element': 'string',
+                    'content': 'Test'
+                }
+            }
+        })
+
+    def test_serialise_meta_description(self):
+        element = Element('string', meta=Metadata(description=String(content='Test')))
+        self.assertEqual(element.as_dict(), {
+            'element': 'string',
+            'meta': {
+                'description': {
+                    'element': 'string',
+                    'content': 'Test'
+                }
+            }
+        })
+
+    def test_serialise_meta_classes(self):
+        element = Element('string', meta=Metadata(classes=Array(content=[String(content='warning')])))
+        self.assertEqual(element.as_dict(), {
+            'element': 'string',
+            'meta': {
+                'classes': {
+                    'element': 'array',
+                    'content': [
+                        {
+                            'element': 'string',
+                            'content': 'warning'
+                        }
+                    ]
+                }
+            }
+        })
+
+    def test_serialise_meta_links(self):
+        element = Element('string', meta=Metadata(links=Array(content=[Element('link', content='https://example.com')])))
+        self.assertEqual(element.as_dict(), {
+            'element': 'string',
+            'meta': {
+                'links': {
+                    'element': 'array',
+                    'content': [
+                        {
+                            'element': 'link',
+                            'content': 'https://example.com'
+                        }
+                    ]
+                }
+            }
+        })
+
+    def test_serialise_meta_ref(self):
+        element = Element('string', meta=Metadata(ref=Element('elementPointer', content='Test')))
+        self.assertEqual(element.as_dict(), {
+            'element': 'string',
+            'meta': {
+                'ref': {
+                    'element': 'elementPointer',
+                    'content': 'Test'
+                }
             }
         })
