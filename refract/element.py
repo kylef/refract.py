@@ -18,60 +18,6 @@ class Element(object):
         self.attributes = attributes or {}
         self.content = content
 
-    def as_dict(self) -> dict:
-        element = {
-            'element': self.element,
-        }
-
-        meta = {}
-
-        if self.meta.id:
-            meta['id'] = self.meta.id.as_dict()
-
-        if self.meta.title:
-            meta['title'] = self.meta.title.as_dict()
-
-        if self.meta.description:
-            meta['description'] = self.meta.description.as_dict()
-
-        if self.meta.classes:
-            meta['classes'] = self.meta.classes.as_dict()
-
-        if self.meta.links:
-            meta['links'] = self.meta.links.as_dict()
-
-        if self.meta.ref:
-            meta['ref'] = self.meta.ref.as_dict()
-
-        if meta:
-            element['meta'] = meta
-
-        if self.attributes:
-            element['attributes'] = dict([(k, v.as_dict()) for (k, v) in self.attributes.items()])
-
-        if self.content or self.element == "null":
-            if isinstance(self.content, KeyValuePair):
-                content = {}
-
-                if self.content.key:
-                    content['key'] = self.content.key.as_dict()
-
-                if self.content.value:
-                    content['value'] = self.content.value.as_dict()
-
-                element['content'] = content
-            elif isinstance(self.content, list):
-                element['content'] = [e.as_dict() for e in self.content]
-            elif isinstance(self.content, Element):
-                element['content'] = self.content.as_dict()
-            else:
-                element['content'] = self.content
-
-        # TODO meta
-        # TODO attributes
-
-        return element
-
     @classmethod
     def from_dict(cls, namespace, element_dict):
         if 'element' not in element_dict:
