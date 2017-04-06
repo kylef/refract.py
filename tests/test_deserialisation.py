@@ -1,10 +1,22 @@
 import unittest
 from refract import Namespace, Element, String, Number, Boolean, Null
+from refract.json import JSONDeserialiser
 
 
 class DeserialisationTests(unittest.TestCase):
+    def setUp(self):
+        self.deserialiser = JSONDeserialiser(Namespace())
+
+    def deserialise(self, element_dict):
+        return self.deserialiser.deserialise_dict(element_dict)
+
+    def test_deserialise_json(self):
+        element = self.deserialiser.deserialise('{"element": "string"}')
+        self.assertIsInstance(element, String)
+        self.assertEqual(element.element, 'string')
+
     def test_deserialise_string(self):
-        element = Namespace().from_dict({
+        element = self.deserialise({
             'element': 'string',
             'content': 'Hello World'
         })
@@ -14,7 +26,7 @@ class DeserialisationTests(unittest.TestCase):
         self.assertEqual(element.content, 'Hello World')
 
     def test_deserialise_number(self):
-        element = Namespace().from_dict({
+        element = self.deserialise({
             'element': 'number',
             'content': 3
         })
@@ -24,7 +36,7 @@ class DeserialisationTests(unittest.TestCase):
         self.assertEqual(element.content, 3)
 
     def test_deserialise_boolean(self):
-        element = Namespace().from_dict({
+        element = self.deserialise({
             'element': 'boolean',
             'content': True
         })
@@ -35,7 +47,7 @@ class DeserialisationTests(unittest.TestCase):
 
 
     def test_deserialise_null(self):
-        element = Namespace().from_dict({
+        element = self.deserialise({
             'element': 'null',
             'content': None
         })
@@ -45,7 +57,7 @@ class DeserialisationTests(unittest.TestCase):
         self.assertEqual(element.content, None)
 
     def test_deserialise_object(self):
-        element = Namespace().from_dict({
+        element = self.deserialise({
             'element': 'object',
             'content': [
                 {
@@ -84,7 +96,7 @@ class DeserialisationTests(unittest.TestCase):
         self.assertEqual(value.content, 'Hello World')
 
     def test_deserialise_array(self):
-        element = Namespace().from_dict({
+        element = self.deserialise({
             'element': 'array',
             'content': [
                 {
@@ -102,7 +114,7 @@ class DeserialisationTests(unittest.TestCase):
         self.assertEqual(element.content[0].content, 'Hello World')
 
     def test_deserailise_custom(self):
-        element = Namespace().from_dict({
+        element = self.deserialise({
             'element': 'custom',
             'content': {
                 'element': 'string',

@@ -59,3 +59,53 @@ class JSONSerialiser:
 
     def serialise(self, element, **kwargs):
         return json.dumps(self.serialise_dict(element), **kwargs)
+
+
+class JSONDeserialiser:
+    def __init__(self, namespace=None):
+        self.namespace = namespace or Namespace()
+
+    def find_element_class(self, element_name):
+        for element in self.namespace.elements:
+            if element.element == element_name:
+                return element
+
+        return Element
+
+    def deserialise_dict(self, element_dict):
+        if 'element' not in element_dict:
+            raise ValueError('Given element does not contain an element property')
+
+        cls = self.find_element_class(element_dict['element'])
+
+        if hasattr(cls, 'element'):
+            element = cls()
+        else:
+            element = cls(element_dict['element'])
+
+        if 'content' in element_dict:
+            content = element_dict['content']
+
+            if isinstance(content, list):
+                element.content = [self.deserialise_dict(e) for e in content]
+            elif isinstance(content, dict):
+                if element.element == 'member':
+                    key = content.get('key')
+                    if key:
+                        element.key = self.deserialise_dict(key)
+
+                    value = content.get('value')
+                    if value:
+                        element.value = self.deserialise_dict(value)
+                else:
+                    element.content = self.deserialise_dict(content)
+            else:
+                element.content = content
+
+        # TODO meta
+        # TODO attributes
+
+        return element
+
+    def deserialise(self, element_json):
+        return self.deserialise_dict(json.loads(element_json))
