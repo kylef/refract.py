@@ -57,5 +57,5 @@ class JSONSerialiser:
 
         return element_dict
 
-    def serialise(self, element):
-        pass
+    def serialise(self, element, **kwargs):
+        return json.dumps(self.serialise_dict(element), **kwargs)
