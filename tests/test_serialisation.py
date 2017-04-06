@@ -163,3 +163,15 @@ class SerialisationTests(unittest.TestCase):
                 }
             }
         })
+
+
+    def test_serialise_attributes(self):
+        element = Element('string', attributes={'test': Element('example')})
+        self.assertEqual(element.as_dict(), {
+            'element': 'string',
+            'attributes': {
+                'test': {
+                    'element': 'example'
+                }
+            }
+        })

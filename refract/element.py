@@ -12,9 +12,10 @@ class Metadata:
 
 
 class Element(object):
-    def __init__(self, element: str, meta: Metadata = None, content=None):
+    def __init__(self, element: str, meta: Metadata = None, attributes = None, content=None):
         self.element = element
         self.meta = meta or Metadata()
+        self.attributes = attributes or {}
         self.content = content
 
     def as_dict(self) -> dict:
@@ -45,6 +46,8 @@ class Element(object):
         if meta:
             element['meta'] = meta
 
+        if self.attributes:
+            element['attributes'] = dict([(k, v.as_dict()) for (k, v) in self.attributes.items()])
 
         if self.content or self.element == "null":
             if isinstance(self.content, KeyValuePair):
@@ -107,22 +110,22 @@ class Element(object):
 class String(Element):
     element = 'string'
 
-    def __init__(self, meta: Metadata = None, content=None):
-        super(String, self).__init__('string', meta=meta, content=content)
+    def __init__(self, meta: Metadata = None, attributes = None, content=None):
+        super(String, self).__init__('string', meta=meta, attributes=attributes, content=content)
 
 
 class Number(Element):
     element = 'number'
 
-    def __init__(self, content=None):
-        super(Number, self).__init__('number', content=content)
+    def __init__(self, attributes = None, content=None):
+        super(Number, self).__init__('number', attributes=attributes, content=content)
 
 
 class Boolean(Element):
     element = 'boolean'
 
-    def __init__(self, meta: Metadata = None, content=None):
-        super(Boolean, self).__init__('boolean', meta=meta, content=content)
+    def __init__(self, meta: Metadata = None, attributes = None, content=None):
+        super(Boolean, self).__init__('boolean', meta=meta, attributes=attributes, content=content)
 
 
 class Null(Element):
@@ -136,8 +139,8 @@ KeyValuePair = namedtuple('KeyValuePair', ['key', 'value'])
 class Member(Element):
     element = 'member'
 
-    def __init__(self, meta: Metadata = None, key: Element=None, value: Element=None):
-        super(Member, self).__init__('member', meta=meta, content=KeyValuePair(key, value))
+    def __init__(self, meta: Metadata = None, attributes = None, key: Element=None, value: Element=None):
+        super(Member, self).__init__('member', meta=meta, attributes=attributes, content=KeyValuePair(key, value))
 
     @property
     def key(self) -> Element:
@@ -159,8 +162,8 @@ class Member(Element):
 class Array(Element):
     element = 'array'
 
-    def __init__(self, meta: Metadata = None, content=None):
-        super(Array, self).__init__('array', meta=meta, content=content)
+    def __init__(self, meta: Metadata = None, attributes=None, content=None):
+        super(Array, self).__init__('array', meta=meta, attributes=attributes, content=content)
 
     def __len__(self):
         return len(self.content)
@@ -172,8 +175,8 @@ class Array(Element):
 class Object(Element):
     element = 'object'
 
-    def __init__(self, meta: Metadata = None, content=None):
-        super(Object, self).__init__('object', meta=meta, content=content)
+    def __init__(self, meta: Metadata = None, attributes = None, content=None):
+        super(Object, self).__init__('object', meta=meta, attributes=attributes, content=content)
 
     def __len__(self):
         return len(self.content)
