@@ -3,6 +3,12 @@
 A Python library for interacting with
 [Refract](https://github.com/refractproject/refract-spec).
 
+## Installation
+
+```python
+$ pip install refract
+```
+
 ## Usage
 
 ### Elements
