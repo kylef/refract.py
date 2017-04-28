@@ -158,6 +158,9 @@ class Array(Element):
     def __getitem__(self, index):
         return self.content.__getitem__(index)
 
+    def append(self, element):
+        self.content.append(element)
+
 
 class Object(Element):
     element = 'object'
