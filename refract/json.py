@@ -1,4 +1,5 @@
 import json
+from refract.namespace import Namespace
 from refract.element import KeyValuePair, Element, Metadata
 
 
@@ -102,6 +103,30 @@ class JSONDeserialiser:
 
         return {}
 
+    def deserialise_content(self, element_dict):
+        if 'content' in element_dict:
+            content = element_dict['content']
+
+            if isinstance(content, list):
+                return [self.deserialise_dict(e) for e in content]
+            elif isinstance(content, dict):
+                if 'element' in content:
+                    return self.deserialise_dict(content)
+                elif 'key' in content:
+                    key = self.deserialise_dict(content['key'])
+
+                    value = content.get('value')
+                    if value:
+                        value = self.deserialise_dict(value)
+
+                    return KeyValuePair(key=key, value=value)
+                else:
+                    raise ValueError('Given element content contains object')
+            else:
+                return content
+
+        return None
+
     def deserialise_dict(self, element_dict):
         if 'element' not in element_dict:
             raise ValueError('Given element does not contain an element property')
@@ -113,28 +138,9 @@ class JSONDeserialiser:
         else:
             element = cls(element_dict['element'])
 
-        if 'content' in element_dict:
-            content = element_dict['content']
-
-            if isinstance(content, list):
-                element.content = [self.deserialise_dict(e) for e in content]
-            elif isinstance(content, dict):
-                if element.element == 'member':
-                    key = content.get('key')
-                    if key:
-                        element.key = self.deserialise_dict(key)
-
-                    value = content.get('value')
-                    if value:
-                        element.value = self.deserialise_dict(value)
-                else:
-                    element.content = self.deserialise_dict(content)
-            else:
-                element.content = content
-
+        element.content = self.deserialise_content(element_dict)
         element.meta = self.deserialise_meta(element_dict)
         element.attributes = self.deserialise_attributes(element_dict)
-
         return element
 
     def deserialise(self, element_json):
