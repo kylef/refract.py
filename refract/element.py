@@ -18,6 +18,14 @@ class Element(object):
         self.attributes = attributes or {}
         self.content = content
 
+    def __repr__(self):
+        if isinstance(self.content, Element):
+            return "<Element({}) content={}>".format(self.element, 'Element')
+
+        return "<Element({}) content={}>".format(self.element, repr(self.content))
+
+    # Meta Accessors
+
     @property
     def id(self):
         return self.meta.id
@@ -126,7 +134,10 @@ class Array(Element):
         super(Array, self).__init__('array', meta=meta, attributes=attributes, content=content)
 
     def __len__(self):
-        return len(self.content)
+        if self.content:
+            return len(self.content)
+
+        return 0
 
     def __getitem__(self, index):
         return self.content.__getitem__(index)
@@ -139,7 +150,10 @@ class Object(Element):
         super(Object, self).__init__('object', meta=meta, attributes=attributes, content=content)
 
     def __len__(self):
-        return len(self.content)
+        if self.content:
+            return len(self.content)
+
+        return 0
 
     def keys(self):
         return [element.key for element in self.content]
