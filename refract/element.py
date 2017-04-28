@@ -24,6 +24,22 @@ class Element(object):
 
         return "<Element({}) content={}>".format(self.element, repr(self.content))
 
+    @property
+    def underlying_value(self):
+        def get_value(item):
+            if isinstance(item, KeyValuePair):
+                return (get_value(item.key), get_value(item.value))
+            elif isinstance(item, list):
+                return [get_value(element) for element in item]
+            elif isinstance(item, Element):
+                if isinstance(item, Object) or item.element == 'object':
+                    return dict(get_value(item.content))
+                return get_value(item.content)
+
+            return item
+
+        return get_value(self)
+
     # Meta Accessors
 
     @property
