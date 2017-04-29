@@ -13,7 +13,7 @@ class Array(Element):
     def __init__(self, meta: Metadata = None, attributes=None,
                  content = None) -> None:
         super(Array, self).__init__(meta=meta, attributes=attributes,
-                                    content=content)
+                                    content=content or [])
 
     def __len__(self):
         """

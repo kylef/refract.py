@@ -9,5 +9,6 @@ A library for interacting with Refract_.
 
    elements
    serialisers
+   apielements
 
 .. _Refract: https://github.com/refractproject/refract-spec
