@@ -72,6 +72,9 @@ class JSONSerialiser:
     def serialise(self, element: Element, **kwargs) -> str:
         """
         Serialises the given element into JSON.
+
+        >>> JSONSerialiser().serialise(String(content='Hello'))
+        {"element": "string", "content": "Hello"}
         """
 
         return json.dumps(self.serialise_dict(element), **kwargs)
@@ -176,6 +179,10 @@ class JSONDeserialiser:
     def deserialise(self, element_json: str) -> Element:
         """
         Deserialises the given JSON into an element.
+
+        >>> json = '{"element": "string", "content": "Hello"'
+        >>> JSONDeserialiser().deserialise(json)
+        String(content='Hello')
         """
 
         return self.deserialise_dict(json.loads(element_json))

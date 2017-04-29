@@ -2,6 +2,12 @@ from refract.elements.base import Element, Metadata
 
 
 class String(Element):
+    """
+    Refract String Element
+
+    >>> String(content='Hello')
+    """
+
     element = 'string'
 
     def __init__(self, meta: Metadata = None, attributes = None,
@@ -14,6 +20,12 @@ class String(Element):
 
 
 class Number(Element):
+    """
+    Refract Number Element
+
+    >>> Number(content=5)
+    """
+
     element = 'number'
 
     def __init__(self, meta: Metadata = None, attributes = None,
@@ -26,6 +38,12 @@ class Number(Element):
 
 
 class Boolean(Element):
+    """
+    Refract Boolean Element
+
+    >>> Boolean(content=True)
+    """
+
     element = 'boolean'
 
     def __init__(self, meta: Metadata = None, attributes = None,
@@ -38,6 +56,12 @@ class Boolean(Element):
 
 
 class Null(Element):
+    """
+    Refract Null Element
+
+    >>> Null()
+    """
+
     element = 'null'
 
     def __init__(self, meta: Metadata = None, attributes = None) -> None:

@@ -40,6 +40,15 @@ class Element(object):
     def underlying_value(self):
         """
         Returns the underlying (unrefracted) value of element
+
+        >>> Element(content='Hello').underlying_value
+        'Hello'
+
+        >>> Element(content=Element(content='Hello')).underlying_value
+        'Hello'
+
+        >>> Element(content=[Element(content='Hello')]).underlying_value
+        ['Hello']
         """
 
         from refract.elements.object import Object
