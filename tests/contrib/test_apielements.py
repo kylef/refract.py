@@ -1,5 +1,5 @@
 import unittest
-from refract.elements import String, Array, Number
+from refract.elements import String, Number
 from refract.contrib.apielements import (
     ParseResult, Annotation, Category, Copy, Resource, Asset, HTTPRequest,
     HTTPResponse, HTTPTransaction, Transition

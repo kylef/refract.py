@@ -66,7 +66,6 @@ class Object(Element):
         else:
             self.content = content
 
-
     def __len__(self):
         """
         Number of items in the object.
