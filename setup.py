@@ -7,7 +7,7 @@ setup(
     version='0.1.0',
     description='A Python library for interacting with Refract.',
     url='https://github.com/kylef/refract.py',
-    packages=['refract'],
+    packages=['refract', 'refract.elements'],
     author='Kyle Fuller',
     author_email='kyle@fuller.li',
     license='BSD',
