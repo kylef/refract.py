@@ -11,6 +11,11 @@ class ArrayTests(unittest.TestCase):
     def test_initialisation(self):
         self.assertEqual(self.array.content, [self.title, self.hello])
 
+    def test_initialisation_python_types(self):
+        array = Array(content=['Hello'])
+        self.assertIsInstance(array[0], String)
+        self.assertEqual(array[0].content, 'Hello')
+
     def test_len(self):
         self.assertEqual(len(self.array), 2)
 

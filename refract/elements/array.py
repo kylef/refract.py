@@ -5,6 +5,8 @@ class Array(Element):
     """
     Refract Object Element
 
+    >>> Array(content=['Hello'])
+
     >>> Array(content=[Element()])
     """
 
@@ -13,7 +15,11 @@ class Array(Element):
     def __init__(self, meta: Metadata = None, attributes=None,
                  content = None) -> None:
         super(Array, self).__init__(meta=meta, attributes=attributes,
-                                    content=content or [])
+                                    content=[])
+
+        if content:
+            from refract.refraction import refract
+            self.content = list(map(refract, content))
 
     def __len__(self):
         """
