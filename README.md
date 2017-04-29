@@ -27,17 +27,17 @@ element.title = String(content='Name')
 element.description = String(content='A short decription')
 ```
 
-##### Underlying Value
+##### Defract
 
 You can compute the underlying value into a Python type using
-`underlying_value`.
+`defract`.
 
 ```python
 element = Object(content=[
   Member(key=String(content='id'), value=String(content='Example'))
 ])
 
-print(element.underlying_value)
+print(element.defract)
 # {'id': 'Example'}
 ```
 

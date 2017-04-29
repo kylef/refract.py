@@ -37,17 +37,17 @@ class Element(object):
         )
 
     @property
-    def underlying_value(self):
+    def defract(self):
         """
         Returns the underlying (unrefracted) value of element
 
-        >>> Element(content='Hello').underlying_value
+        >>> Element(content='Hello').defract
         'Hello'
 
-        >>> Element(content=Element(content='Hello')).underlying_value
+        >>> Element(content=Element(content='Hello')).defract
         'Hello'
 
-        >>> Element(content=[Element(content='Hello')]).underlying_value
+        >>> Element(content=[Element(content='Hello')]).defract
         ['Hello']
         """
 
