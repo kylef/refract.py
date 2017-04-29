@@ -284,3 +284,83 @@ class CompactJSONSerialiser:
         """
 
         return json.dumps(self.serialise_element(element))
+
+
+class CompactJSONDeserialiser:
+    """
+    JSON Refract Deserialiser
+    """
+
+    def __init__(self, namespace: Namespace=None) -> None:
+        self.namespace = namespace or Namespace()
+
+    def find_element_class(self, element_name):
+        for element in self.namespace.elements:
+            if element.element == element_name:
+                return element
+
+        return Element
+
+    def deserialise_meta(self, meta) -> Metadata:
+        metadata = Metadata()
+
+        for key in ('id', 'title', 'description', 'classes', 'links', 'ref'):
+            if meta and key in meta:
+                element = self.deserialise_element(meta[key])
+                setattr(metadata, key, element)
+
+        return metadata
+
+    def deserialise_attributes(self, attributes) -> dict:
+        if attributes:
+            return dict([(k, self.deserialise_element(v))
+                         for (k, v) in attributes.items()])
+
+        return {}
+
+    def deserialise_element(self, source) -> Element:
+        if len(source) != 4:
+            raise ValueError('Given element is not tuple of 4')
+
+        element_name = source[0]
+        element_cls = self.find_element_class(element_name)
+        meta = self.deserialise_meta(source[1])
+        attributes = self.deserialise_attributes(source[2])
+        element = element_cls(meta=meta, attributes=attributes)
+        element.element = element_name
+
+        content = source[3]
+        if isinstance(content, list):
+            if len(content) == 4 and isinstance(content[0], str):
+                element.content = self.deserialise_element(content)
+            elif len(content) > 1 and content[0] == 'pair':
+                key = self.deserialise_element(content[1])
+
+                if len(content) > 2:
+                    value = self.deserialise_element(content[2])
+                else:
+                    value = None
+
+                element.content = KeyValuePair(key=key, value=value)
+            else:
+                element.content = [self.deserialise_element(e)
+                                   for e in content]
+        else:
+            element.content = content
+
+        return element
+
+    def deserialise(self, content) -> Element:
+        """
+        Deserialises the given compact JSON into an element.
+
+        >>> deserialiser = CompactJSONDeserialiser()
+        >>> deserialiser.deserialise('["string", null, null, "Hi"]')
+        String(content='Hi')
+        """
+
+        content = json.loads(content)
+        if not isinstance(content, list):
+            raise ValueError('Given content was not compact JSON refract')
+
+        return self.deserialise_element(content)

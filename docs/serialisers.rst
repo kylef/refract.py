@@ -19,6 +19,12 @@ JSONDeserialiser
 .. autoclass:: refract.json.JSONDeserialiser
    :members:
 
+ComapctJSONDeserialiser
+----------------------
+
+.. autoclass:: refract.json.CompactJSONDeserialiser
+   :members:
+
 LegacyJSONDeserialiser
 -----------------------
 
