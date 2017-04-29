@@ -75,7 +75,8 @@ class Element(object):
 
     @id.setter
     def id(self, new_value):
-        self.meta.id = new_value
+        from refract.refraction import refract
+        self.meta.id = refract(new_value)
 
     @property
     def title(self):
@@ -83,7 +84,8 @@ class Element(object):
 
     @title.setter
     def title(self, new_value):
-        self.meta.title = new_value
+        from refract.refraction import refract
+        self.meta.title = refract(new_value)
 
     @property
     def description(self):
@@ -91,7 +93,8 @@ class Element(object):
 
     @description.setter
     def description(self, new_value):
-        self.meta.description = new_value
+        from refract.refraction import refract
+        self.meta.description = refract(new_value)
 
     @property
     def ref(self):
@@ -99,7 +102,8 @@ class Element(object):
 
     @ref.setter
     def ref(self, new_value):
-        self.meta.ref = new_value
+        from refract.refraction import refract
+        self.meta.ref = refract(new_value)
 
     @property
     def links(self):
@@ -107,7 +111,8 @@ class Element(object):
 
     @links.setter
     def links(self, new_value):
-        self.meta.links = new_value
+        from refract.refraction import refract
+        self.meta.links = refract(new_value)
 
     @property
     def classes(self):
@@ -115,7 +120,8 @@ class Element(object):
 
     @classes.setter
     def classes(self, new_value):
-        self.meta.classes = new_value
+        from refract.refraction import refract
+        self.meta.classes = refract(new_value)
 
     #
 
