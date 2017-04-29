@@ -97,6 +97,11 @@ html_theme = 'alabaster'
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
 
+html_sidebars = {
+    'index': ['sidebar_intro.html', 'searchbox.html'],
+    '**': ['sidebar_intro.html', 'localtoc.html', 'relations.html', 'searchbox.html'],
+}
+
 
 # -- Options for HTMLHelp output ------------------------------------------
 
