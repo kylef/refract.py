@@ -1,4 +1,5 @@
-from refract.element import Element, Number, String, Boolean, Null, Member, Array, Object
+from refract.elements import (Element, Number, String, Boolean, Null, Member,
+                              Array, Object)
 
 
 class Namespace(object):

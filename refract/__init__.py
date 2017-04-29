@@ -1,2 +1,3 @@
-from refract.element import Element, String, Number, Boolean, Null, Member, KeyValuePair, Array, Object, Metadata
+from refract.elements import (Element, Metadata, String, Number, Boolean, Null,
+                              Array, Member, KeyValuePair, Object)
 from refract.namespace import Namespace

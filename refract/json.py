@@ -1,6 +1,7 @@
 import json
+
 from refract.namespace import Namespace
-from refract.element import KeyValuePair, Element, Metadata
+from refract.elements import Element, Metadata, KeyValuePair
 
 
 class JSONSerialiser:
