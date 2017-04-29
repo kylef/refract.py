@@ -107,3 +107,30 @@ class Element(object):
     @classes.setter
     def classes(self, new_value):
         self.meta.classes = new_value
+
+    #
+
+    @property
+    def children(self):
+        """
+        Returns all of the children elements.
+        """
+
+        if isinstance(self.content, list):
+            return self.content
+        elif isinstance(self.content, Element):
+            return [self.content]
+        else:
+            return []
+
+    @property
+    def recursive_children(self):
+        """
+        Generator returning all recursive children elements.
+        """
+
+        for child in self.children:
+            yield child
+
+            for recursive_child in child.recursive_children:
+                yield recursive_child

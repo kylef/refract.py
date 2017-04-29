@@ -54,3 +54,45 @@ class ElementTests(unittest.TestCase):
             Member(key=String(content='key'), value=String(content='value'))
         ])
         self.assertEqual(element.underlying_value, {'key': 'value'})
+
+    # Children
+
+    def test_children_string(self):
+        element = Element('string', content='hello world')
+        self.assertEqual(element.children, [])
+
+    def test_children_array(self):
+        element = Element('things', content=[
+            Element('string', content='hello world')
+        ])
+        self.assertEqual(len(element.children), 1)
+
+    def test_children_direct_element(self):
+        element = Element('thing',
+                          content=Element('string', content='hello world'))
+
+        self.assertEqual(len(element.children), 1)
+
+    # Recursive Children
+
+    def test_recursive_children_string(self):
+        element = Element('string', content='hello world')
+        self.assertEqual(len(list(element.recursive_children)), 0)
+
+    def test_children_array(self):
+        element = Element('things', content=[
+            Element('morethings', content=[
+                Element('string', content='hi')
+            ])
+        ])
+
+        self.assertEqual(len(list(element.recursive_children)), 2)
+
+    def test_children_array_with_direct_element(self):
+        element = Element('things', content=[
+            Element('morethings', content=[
+                Element('thing', content=Element('string', content='hi'))
+            ])
+        ])
+
+        self.assertEqual(len(list(element.recursive_children)), 3)
