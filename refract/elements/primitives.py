@@ -18,6 +18,9 @@ class String(Element):
             content=content
         )
 
+    def __lt__(self, other: Element) -> bool:
+        return self.content < other.content
+
 
 class Number(Element):
     """
@@ -35,6 +38,9 @@ class Number(Element):
             attributes=attributes,
             content=content
         )
+
+    def __lt__(self, other: Element) -> bool:
+        return self.content < other.content
 
 
 class Boolean(Element):

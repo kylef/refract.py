@@ -2,6 +2,12 @@ from refract.elements.base import Element, Metadata
 
 
 class Array(Element):
+    """
+    Refract Object Element
+
+    >>> Array(content=[Element()])
+    """
+
     element = 'array'
 
     def __init__(self, meta: Metadata = None, attributes=None,
@@ -73,3 +79,10 @@ class Array(Element):
         """
 
         return self.content.index(element)
+
+    def clear(self):
+        """
+        Removes all the elements from the array.
+        """
+
+        self.content.clear()

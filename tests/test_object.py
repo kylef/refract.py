@@ -15,6 +15,18 @@ class ObjectTests(unittest.TestCase):
     def test_len(self):
         self.assertEqual(len(self.object), 1)
 
+    def test_getitem(self):
+        value = self.object[self.key]
+        self.assertEqual(value, self.value)
+
+    def test_del(self):
+        del self.object[self.key]
+        self.assertEqual(len(self.object), 0)
+
+    def test_contains(self):
+        self.assertTrue(self.key in self.object)
+        self.assertTrue(self.value not in self.object)
+
     def test_keys(self):
         self.assertEqual(self.object.keys(), [self.key])
 

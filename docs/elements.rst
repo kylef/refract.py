@@ -3,6 +3,9 @@
 Elements
 ========
 
+.. contents::
+  :depth: 3
+
 .. module:: refract.elements
 
 Element
@@ -36,12 +39,14 @@ Array
 
 .. autoclass:: Array
    :members:
+   :special-members:
 
 Object
 ------
 
 .. autoclass:: Object
    :members:
+   :special-members:
 
 Member
 ------

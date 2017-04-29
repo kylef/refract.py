@@ -22,6 +22,10 @@ class ArrayTests(unittest.TestCase):
         del self.array[0]
         self.assertEqual(len(self.array), 1)
 
+    def test_contains(self):
+        self.assertTrue(self.title in self.array)
+        self.assertTrue(String(content='test') not in self.array)
+
     def test_append(self):
         self.array.append(String(content='final'))
         self.assertEqual(self.array[2].content, 'final')
@@ -33,3 +37,7 @@ class ArrayTests(unittest.TestCase):
     def test_index(self):
         index = self.array.index(self.array[1])
         self.assertEqual(index, 1)
+
+    def test_clear(self):
+        self.array.clear()
+        self.assertEqual(len(self.array), 0)
