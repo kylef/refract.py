@@ -47,6 +47,8 @@ class Object(Element):
     """
     Refract Object Element
 
+    >>> Object(content={})
+
     >>> Object(content=[Member()])
     """
 
@@ -54,8 +56,14 @@ class Object(Element):
 
     def __init__(self, meta: Metadata = None, attributes = None,
                  content: List[Member] = None) -> None:
-        super(Object, self).__init__(meta=meta, attributes=attributes,
-                                     content=content)
+        super(Object, self).__init__(meta=meta, attributes=attributes)
+
+        if isinstance(content, (dict)):
+            from refract.refraction import refract
+            self.content = refract(content).content
+        else:
+            self.content = content
+
 
     def __len__(self):
         """

@@ -12,6 +12,13 @@ class ObjectTests(unittest.TestCase):
     def test_initialisation(self):
         self.assertEqual(self.object.content, [self.member])
 
+    def test_initialisation_with_dict(self):
+        obj = Object(content={'title': 'hello'})
+        self.assertEqual(len(obj), 1)
+        self.assertIsInstance(obj.children[0], Member)
+        self.assertIsInstance(obj.children[0].key, String)
+        self.assertIsInstance(obj.children[0].value, String)
+
     def test_len(self):
         self.assertEqual(len(self.object), 1)
 
