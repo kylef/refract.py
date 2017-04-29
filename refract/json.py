@@ -74,7 +74,7 @@ class JSONSerialiser:
         Serialises the given element into JSON.
 
         >>> JSONSerialiser().serialise(String(content='Hello'))
-        {"element": "string", "content": "Hello"}
+        '{"element": "string", "content": "Hello"}'
         """
 
         return json.dumps(self.serialise_dict(element), **kwargs)
@@ -234,3 +234,53 @@ class LegacyJSONDeserialiser(JSONDeserialiser):
         return super(LegacyJSONDeserialiser, self).deserialise_content(
             element_dict
         )
+
+
+class CompactJSONSerialiser:
+    def serialise_meta(self, meta: Metadata):
+        metadata = {}
+
+        for key in ('id', 'title', 'description', 'classes', 'links', 'ref'):
+            value = getattr(meta, key, None)
+            if value:
+                metadata[key] = self.serialise_element(value)
+
+        if metadata:
+            return metadata
+
+    def serialise_attributes(self, attributes: dict):
+        if attributes:
+            return dict([(k, self.serialise_content(v))
+                         for (k, v) in attributes.items()])
+
+    def serialise_content(self, content):
+        if isinstance(content, Element):
+            return self.serialise_element(content)
+        elif isinstance(content, list):
+            return [self.serialise_element(e) for e in content]
+        elif isinstance(content, KeyValuePair):
+            return [
+                "pair",
+                self.serialise_element(content.key),
+                self.serialise_element(content.value)
+            ]
+
+        return content
+
+    def serialise_element(self, element: Element):
+        return [
+            element.element,
+            self.serialise_meta(element.meta),
+            self.serialise_attributes(element.attributes),
+            self.serialise_content(element.content)
+        ]
+
+    def serialise(self, element: Element) -> str:
+        """
+        Serialises the given element into Compact JSON.
+
+        >>> CompactJSONSerialiser().serialise(String(content='Hello'))
+        '["string", null, null, "Hello"]'
+        """
+
+        return json.dumps(self.serialise_element(element))

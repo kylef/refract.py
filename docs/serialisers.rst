@@ -7,6 +7,12 @@ JSONSerialiser
 .. autoclass:: refract.json.JSONSerialiser
    :members:
 
+ComapctJSONSerialiser
+----------------------
+
+.. autoclass:: refract.json.CompactJSONSerialiser
+   :members:
+
 JSONDeserialiser
 ----------------
 
