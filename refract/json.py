@@ -1,7 +1,7 @@
 import json
 
 from refract.namespace import Namespace
-from refract.elements import Element, Metadata, KeyValuePair
+from refract.elements import Element, Metadata, KeyValuePair, String
 
 
 class JSONSerialiser:
@@ -188,29 +188,42 @@ class LegacyJSONDeserialiser(JSONDeserialiser):
 
     def deserialise_dict(self, element_dict):
         if isinstance(element_dict, str):
-            return Element('string', content=element_dict)
+            return String(content=element_dict)
 
         if isinstance(element_dict, (int, float)):
             return Element('number', content=element_dict)
 
         if isinstance(element_dict, list):
-            return Element('array', content=[self.deserialise_dict(e) for e in element_dict])
+            return Element('array', content=[self.deserialise_dict(e)
+                                             for e in element_dict])
 
-        if isinstance(element_dict, dict) and 'key' not in element_dict and 'element' not in element_dict:
-            return Element('array', content=[self.deserialise_dict(e) for e in element_dict])
+        if isinstance(element_dict, dict) and 'key' not in element_dict \
+                and 'element' not in element_dict:
+            return Element('array', content=[self.deserialise_dict(e)
+                                             for e in element_dict])
 
-        return super(LegacyJSONDeserialiser, self).deserialise_dict(element_dict)
+        return super(LegacyJSONDeserialiser, self).deserialise_dict(
+            element_dict
+        )
 
     def deserialise_content(self, element_dict):
-        if 'content' in element_dict and isinstance(element_dict['content'], dict):
+        if 'content' in element_dict and \
+                isinstance(element_dict['content'], dict):
             content = element_dict['content']
 
-            if 'key' not in content and 'element' not in content and 'href' in content:
+            if 'key' not in content and 'element' not in content and \
+                    'href' in content:
                 attributes = {}
 
                 if 'path' in content:
                     attributes['path'] = String(content=content['path'])
 
-                return Element('elementPointer', attributes=attributes, content=content['href'])
+                return Element(
+                    'elementPointer',
+                    attributes=attributes,
+                    content=content['href']
+                )
 
-        return super(LegacyJSONDeserialiser, self).deserialise_content(element_dict)
+        return super(LegacyJSONDeserialiser, self).deserialise_content(
+            element_dict
+        )

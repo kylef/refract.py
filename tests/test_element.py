@@ -79,7 +79,7 @@ class ElementTests(unittest.TestCase):
         element = Element('string', content='hello world')
         self.assertEqual(len(list(element.recursive_children)), 0)
 
-    def test_children_array(self):
+    def test_recursive_children_array(self):
         element = Element('things', content=[
             Element('morethings', content=[
                 Element('string', content='hi')
