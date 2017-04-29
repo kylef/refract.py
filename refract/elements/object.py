@@ -1,10 +1,13 @@
+from typing import List
+
 from refract.elements.base import Element, Metadata, KeyValuePair
+from refract.elements.array import Array
 
 
 class Member(Element):
     element = 'member'
 
-    def __init__(self, meta: Metadata = None, attributes = None, key: Element=None, value: Element=None):
+    def __init__(self, meta: Metadata = None, attributes = None, key: Element=None, value: Element=None) -> None:
         super(Member, self).__init__('member', meta=meta, attributes=attributes, content=KeyValuePair(key, value))
 
     @property
@@ -20,25 +23,18 @@ class Member(Element):
         return self.content.value
 
     @value.setter
-    def value(self, value: Element) -> Element:
+    def value(self, value: Element):
         self.content = KeyValuePair(key=self.key, value=value)
 
 
-
-class Object(Element):
+class Object(Array):
     element = 'object'
 
-    def __init__(self, meta: Metadata = None, attributes = None, content=None):
-        super(Object, self).__init__('object', meta=meta, attributes=attributes, content=content)
+    def __init__(self, meta: Metadata = None, attributes = None, content: List[Member] = None) -> None:
+        super(Object, self).__init__(meta=meta, attributes=attributes, content=content)
 
-    def __len__(self):
-        if self.content:
-            return len(self.content)
-
-        return 0
-
-    def keys(self):
+    def keys(self) -> List[Element]:
         return [element.key for element in self.content]
 
-    def values(self):
+    def values(self) -> List[Element]:
         return [element.value for element in self.content]

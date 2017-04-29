@@ -1,11 +1,12 @@
 from collections import namedtuple
+from typing import TypeVar
 
 
 KeyValuePair = namedtuple('KeyValuePair', ['key', 'value'])
 
 
 class Metadata:
-    def __init__(self, id = None, title = None, description = None, classes = None, links = None, ref = None):
+    def __init__(self, id = None, title = None, description = None, classes = None, links = None, ref = None) -> None:
         self.id = id
         self.title = title
         self.description = description
@@ -15,8 +16,9 @@ class Metadata:
 
 
 class Element(object):
-    def __init__(self, element: str, meta: Metadata = None, attributes = None, content=None):
-        self.element = element
+    def __init__(self, element: str = None, meta: Metadata = None, attributes = None, content=None) -> None:
+        if element and not hasattr(self, 'element'):
+            self.element = element
         self.meta = meta or Metadata()
         self.attributes = attributes or {}
         self.content = content
