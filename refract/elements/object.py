@@ -1,7 +1,6 @@
 from typing import List
 
 from refract.elements.base import Element, Metadata, KeyValuePair
-from refract.elements.array import Array
 
 
 class Member(Element):
@@ -44,7 +43,7 @@ class Member(Element):
         self.content = KeyValuePair(key=self.key, value=value)
 
 
-class Object(Array):
+class Object(Element):
     """
     Refract Object Element
 
@@ -57,6 +56,19 @@ class Object(Array):
                  content: List[Member] = None) -> None:
         super(Object, self).__init__(meta=meta, attributes=attributes,
                                      content=content)
+
+    def __len__(self):
+        """
+        Number of items in the object.
+
+        >>> len(Object())
+        0
+        """
+
+        if self.content:
+            return len(self.content)
+
+        return 0
 
     def __getitem__(self, key: Element) -> Element:
         """
