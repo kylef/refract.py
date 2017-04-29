@@ -1,4 +1,7 @@
 language: python
 python:
   - "3.5"
-script: python -m unittest discover -v
+install: mypy
+script:
+  - mypy refract tests
+  - python -m unittest discover -v

@@ -14,10 +14,6 @@ class SerialisationTests(unittest.TestCase):
         element = Element('string')
         self.assertEqual(self.serialiser.serialise(element), '{"element": "string"}')
 
-    def test_serialise_element_as_json(self):
-        element = Element('string')
-        self.assertEqual(self.serialiser.serialise(element), '{"element": "string"}')
-
     def test_serialise_string(self):
         element = Element('string', content='Hello World')
         self.assertEqual(self.serialise(element), {
