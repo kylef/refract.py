@@ -8,5 +8,6 @@ A library for interacting with Refract_.
    :caption: Contents:
 
    elements
+   serialisers
 
 .. _Refract: https://github.com/refractproject/refract-spec
