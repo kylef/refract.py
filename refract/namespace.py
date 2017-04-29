@@ -1,4 +1,4 @@
-from refract.elements import (Element, Number, String, Boolean, Null, Member,
+from refract.elements import (Number, String, Boolean, Null, Member,
                               Array, Object)
 
 

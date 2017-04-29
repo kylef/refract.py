@@ -1,12 +1,12 @@
 from collections import namedtuple
-from typing import TypeVar
 
 
 KeyValuePair = namedtuple('KeyValuePair', ['key', 'value'])
 
 
 class Metadata:
-    def __init__(self, id = None, title = None, description = None, classes = None, links = None, ref = None) -> None:
+    def __init__(self, id = None, title = None, description = None,
+                 classes = None, links = None, ref = None) -> None:
         self.id = id
         self.title = title
         self.description = description
@@ -16,7 +16,8 @@ class Metadata:
 
 
 class Element(object):
-    def __init__(self, element: str = None, meta: Metadata = None, attributes = None, content=None) -> None:
+    def __init__(self, element: str = None, meta: Metadata = None,
+                 attributes = None, content=None) -> None:
         if element and not hasattr(self, 'element'):
             self.element = element
         self.meta = meta or Metadata()
@@ -27,7 +28,9 @@ class Element(object):
         if isinstance(self.content, Element):
             return "<Element({}) content={}>".format(self.element, 'Element')
 
-        return "<Element({}) content={}>".format(self.element, repr(self.content))
+        return "<Element({}) content={}>".format(
+            self.element, repr(self.content)
+        )
 
     @property
     def underlying_value(self):
@@ -55,7 +58,7 @@ class Element(object):
 
     @id.setter
     def id(self, new_value):
-        self.meta.id = new_valid
+        self.meta.id = new_value
 
     @property
     def title(self):
@@ -63,7 +66,7 @@ class Element(object):
 
     @title.setter
     def title(self, new_value):
-        self.meta.title = new_valid
+        self.meta.title = new_value
 
     @property
     def description(self):
@@ -71,7 +74,7 @@ class Element(object):
 
     @description.setter
     def description(self, new_value):
-        self.meta.description = new_valid
+        self.meta.description = new_value
 
     @property
     def ref(self):
@@ -79,7 +82,7 @@ class Element(object):
 
     @ref.setter
     def ref(self, new_value):
-        self.meta.ref = new_valid
+        self.meta.ref = new_value
 
     @property
     def links(self):
@@ -87,7 +90,7 @@ class Element(object):
 
     @links.setter
     def links(self, new_value):
-        self.meta.links = new_valid
+        self.meta.links = new_value
 
     @property
     def classes(self):
@@ -95,4 +98,4 @@ class Element(object):
 
     @classes.setter
     def classes(self, new_value):
-        self.meta.classes = new_valid
+        self.meta.classes = new_value

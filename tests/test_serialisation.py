@@ -12,7 +12,8 @@ class SerialisationTests(unittest.TestCase):
 
     def test_serialise_element_as_json(self):
         element = Element('string')
-        self.assertEqual(self.serialiser.serialise(element), '{"element": "string"}')
+        serialised = self.serialiser.serialise(element)
+        self.assertEqual(serialised, '{"element": "string"}')
 
     def test_serialise_string(self):
         element = Element('string', content='Hello World')
@@ -106,7 +107,9 @@ class SerialisationTests(unittest.TestCase):
         })
 
     def test_serialise_meta_title(self):
-        element = Element('string', meta=Metadata(title=String(content='Test')))
+        meta = Metadata(title=String(content='Test'))
+        element = Element('string', meta=meta)
+
         self.assertEqual(self.serialise(element), {
             'element': 'string',
             'meta': {
@@ -118,7 +121,9 @@ class SerialisationTests(unittest.TestCase):
         })
 
     def test_serialise_meta_description(self):
-        element = Element('string', meta=Metadata(description=String(content='Test')))
+        meta = Metadata(description=String(content='Test'))
+        element = Element('string', meta=meta)
+
         self.assertEqual(self.serialise(element), {
             'element': 'string',
             'meta': {
@@ -130,7 +135,10 @@ class SerialisationTests(unittest.TestCase):
         })
 
     def test_serialise_meta_classes(self):
-        element = Element('string', meta=Metadata(classes=Array(content=[String(content='warning')])))
+        element = Element('string', meta=Metadata(classes=Array(content=[
+            String(content='warning')
+        ])))
+
         self.assertEqual(self.serialise(element), {
             'element': 'string',
             'meta': {
@@ -147,7 +155,10 @@ class SerialisationTests(unittest.TestCase):
         })
 
     def test_serialise_meta_links(self):
-        element = Element('string', meta=Metadata(links=Array(content=[Element('link', content='https://example.com')])))
+        element = Element('string', meta=Metadata(links=Array(content=[
+            Element('link', content='https://example.com')
+        ])))
+
         self.assertEqual(self.serialise(element), {
             'element': 'string',
             'meta': {
@@ -164,7 +175,9 @@ class SerialisationTests(unittest.TestCase):
         })
 
     def test_serialise_meta_ref(self):
-        element = Element('string', meta=Metadata(ref=Element('elementPointer', content='Test')))
+        pointer = Element('elementPointer', content='Test')
+        element = Element('string', meta=Metadata(ref=pointer))
+
         self.assertEqual(self.serialise(element), {
             'element': 'string',
             'meta': {
@@ -174,7 +187,6 @@ class SerialisationTests(unittest.TestCase):
                 }
             }
         })
-
 
     def test_serialise_attributes(self):
         element = Element('string', attributes={'test': Element('example')})

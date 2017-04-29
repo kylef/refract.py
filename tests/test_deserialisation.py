@@ -45,7 +45,6 @@ class DeserialisationTests(unittest.TestCase):
         self.assertEqual(element.element, 'boolean')
         self.assertEqual(element.content, True)
 
-
     def test_deserialise_null(self):
         element = self.deserialise({
             'element': 'null',

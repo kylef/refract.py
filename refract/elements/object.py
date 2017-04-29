@@ -7,8 +7,11 @@ from refract.elements.array import Array
 class Member(Element):
     element = 'member'
 
-    def __init__(self, meta: Metadata = None, attributes = None, key: Element=None, value: Element=None) -> None:
-        super(Member, self).__init__('member', meta=meta, attributes=attributes, content=KeyValuePair(key, value))
+    def __init__(self, meta: Metadata = None, attributes = None,
+                 key: Element=None, value: Element=None) -> None:
+        super(Member, self).__init__('member', meta=meta,
+                                     attributes=attributes,
+                                     content=KeyValuePair(key, value))
 
     @property
     def key(self) -> Element:
@@ -30,8 +33,10 @@ class Member(Element):
 class Object(Array):
     element = 'object'
 
-    def __init__(self, meta: Metadata = None, attributes = None, content: List[Member] = None) -> None:
-        super(Object, self).__init__(meta=meta, attributes=attributes, content=content)
+    def __init__(self, meta: Metadata = None, attributes = None,
+                 content: List[Member] = None) -> None:
+        super(Object, self).__init__(meta=meta, attributes=attributes,
+                                     content=content)
 
     def keys(self) -> List[Element]:
         return [element.key for element in self.content]

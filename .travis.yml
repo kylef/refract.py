@@ -1,7 +1,8 @@
 language: python
 python:
   - "3.5"
-install: mypy
+install: pip install mypy flake8
 script:
   - mypy refract tests
   - python -m unittest discover -v
+  - flake8 refract tests --ignore=E251

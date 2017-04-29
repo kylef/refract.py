@@ -10,10 +10,13 @@ class ElementTests(unittest.TestCase):
 
     def test_repr(self):
         element = Element('string', content='Hello World')
-        self.assertEqual(repr(element), "<Element(string) content='Hello World'>")
+        self.assertEqual(repr(element),
+                         "<Element(string) content='Hello World'>")
 
         element = Element('array', content=[String('Hello World')])
-        self.assertEqual(repr(element), "<Element(array) content=[<Element(string) content=None>]>")
+
+        desc = "<Element(array) content=[<Element(string) content=None>]>"
+        self.assertEqual(repr(element), desc)
 
     def test_no_value(self):
         element = Element('string')
@@ -32,11 +35,18 @@ class ElementTests(unittest.TestCase):
         self.assertEqual(element.underlying_value, True)
 
     def test_array_value(self):
-        element = Element('array', content=[Element('String', content='Hello World')])
+        element = Element('array', content=[
+            Element('String', content='Hello World')
+        ])
+
         self.assertEqual(element.underlying_value, ['Hello World'])
 
     def test_key_value_pair_value(self):
-        element = Element('element', content=KeyValuePair(key=String(content='key'), value=String(content='value')))
+        element = Element('element', content=KeyValuePair(
+            key=String(content='key'),
+            value=String(content='value')
+        ))
+
         self.assertEqual(element.underlying_value, ('key', 'value'))
 
     def test_object_value(self):
