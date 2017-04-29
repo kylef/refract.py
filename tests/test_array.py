@@ -31,12 +31,23 @@ class ArrayTests(unittest.TestCase):
         self.assertTrue(self.title in self.array)
         self.assertTrue(String(content='test') not in self.array)
 
+    def test_contains_nonrefracted(self):
+        self.assertTrue('title' in self.array)
+
     def test_append(self):
         self.array.append(String(content='final'))
         self.assertEqual(self.array[2].content, 'final')
 
+    def test_append_nonrefracted(self):
+        self.array.append('final')
+        self.assertEqual(self.array[2].content, 'final')
+
     def test_insert(self):
         self.array.insert(0, String(content='final'))
+        self.assertEqual(self.array[0].content, 'final')
+
+    def test_insert_nonrefracted(self):
+        self.array.insert(0, 'final')
         self.assertEqual(self.array[0].content, 'final')
 
     def test_index(self):

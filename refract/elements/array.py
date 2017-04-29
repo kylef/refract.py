@@ -53,17 +53,22 @@ class Array(Element):
 
         del self.content[index]
 
-    def append(self, element: Element):
+    def __contains__(self, element) -> bool:
+        from refract.refraction import refract
+        return refract(element) in self.content
+
+    def append(self, element):
         """
         Append an element onto the array.
 
         >>> array = Array()
-        >>> array.append(Element())
+        >>> array.append('test')
         """
 
-        self.content.append(element)
+        from refract.refraction import refract
+        self.content.append(refract(element))
 
-    def insert(self, index: int, element: Element):
+    def insert(self, index: int, element):
         """
         Insert an element at a given position.
 
@@ -71,7 +76,8 @@ class Array(Element):
         >>> array.insert(0, Element())
         """
 
-        self.content.insert(index, element)
+        from refract.refraction import refract
+        self.content.insert(index, refract(element))
 
     def index(self, element: Element) -> int:
         """
@@ -84,7 +90,8 @@ class Array(Element):
         0
         """
 
-        return self.content.index(element)
+        from refract.refraction import refract
+        return self.content.index(refract(element))
 
     def clear(self):
         """
