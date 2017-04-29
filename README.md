@@ -5,7 +5,7 @@ A Python library for interacting with
 
 ## Installation
 
-```python
+```shell
 $ pip install refract
 ```
 
