@@ -19,4 +19,8 @@ class Array(Element):
         return self.content.__getitem__(index)
 
     def append(self, element):
+        """
+        Append an element onto the array.
+        """
+
         self.content.append(element)

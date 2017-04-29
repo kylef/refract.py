@@ -15,6 +15,10 @@ class Member(Element):
 
     @property
     def key(self) -> Element:
+        """
+        The members key element
+        """
+
         return self.content.key
 
     @key.setter
@@ -23,6 +27,10 @@ class Member(Element):
 
     @property
     def value(self) -> Element:
+        """
+        The members value element
+        """
+
         return self.content.value
 
     @value.setter
@@ -39,7 +47,15 @@ class Object(Array):
                                      content=content)
 
     def keys(self) -> List[Element]:
+        """
+        Returns all of the objects keys.
+        """
+
         return [element.key for element in self.content]
 
     def values(self) -> List[Element]:
+        """
+        Returns all of the objects values.
+        """
+
         return [element.value for element in self.content]

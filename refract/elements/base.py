@@ -16,6 +16,10 @@ class Metadata:
 
 
 class Element(object):
+    """
+    Base Refract Element
+    """
+
     def __init__(self, element: str = None, meta: Metadata = None,
                  attributes = None, content=None) -> None:
         if element and not hasattr(self, 'element'):
@@ -34,6 +38,10 @@ class Element(object):
 
     @property
     def underlying_value(self):
+        """
+        Returns the underlying (unrefracted) value of element
+        """
+
         from refract.elements.object import Object
 
         def get_value(item):
