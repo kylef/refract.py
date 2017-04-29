@@ -18,6 +18,14 @@ class ElementTests(unittest.TestCase):
         desc = "<Element(array) content=[<Element(string) content=None>]>"
         self.assertEqual(repr(element), desc)
 
+    def test_equality(self):
+        element1 = Element('string', content='Hello')
+        element2 = Element('string', content='Hello')
+
+        self.assertEqual(element1, element2)
+        self.assertNotEqual(element1, Element('string', content='Hello1'))
+        self.assertNotEqual(element1, Element('strings', content='Hello'))
+
     def test_no_value(self):
         element = Element('string')
         self.assertEqual(element.defract, None)

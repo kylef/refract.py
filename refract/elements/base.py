@@ -14,6 +14,19 @@ class Metadata:
         self.links = links
         self.ref = ref
 
+    def __eq__(self, other):
+        if not isinstance(other, Metadata):
+            return False
+
+        return (
+            self.id == other.id and
+            self.title == other.title and
+            self.description == other.description and
+            self.classes == other.classes and
+            self.links == other.links and
+            self.ref == other.ref
+        )
+
 
 class Element(object):
     """
@@ -34,6 +47,17 @@ class Element(object):
 
         return "<Element({}) content={}>".format(
             self.element, repr(self.content)
+        )
+
+    def __eq__(self, other):
+        if not isinstance(other, Element):
+            return False
+
+        return (
+            self.element == other.element and
+            self.meta == other.meta and
+            self.attributes == other.attributes and
+            self.content == other.content
         )
 
     @property
