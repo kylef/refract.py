@@ -5,6 +5,10 @@ from refract.elements import Element, Metadata, KeyValuePair
 
 
 class JSONSerialiser:
+    """
+    JSON Refract Serialiser
+    """
+
     def __init__(self):
         pass
 
@@ -65,12 +69,20 @@ class JSONSerialiser:
 
         return element_dict
 
-    def serialise(self, element, **kwargs):
+    def serialise(self, element: Element, **kwargs) -> str:
+        """
+        Serialises the given element into JSON.
+        """
+
         return json.dumps(self.serialise_dict(element), **kwargs)
 
 
 class JSONDeserialiser:
-    def __init__(self, namespace=None):
+    """
+    JSON Refract Deserialiser
+    """
+
+    def __init__(self, namespace: Namespace=None) -> None:
         self.namespace = namespace or Namespace()
 
     def find_element_class(self, element_name):
@@ -161,5 +173,44 @@ class JSONDeserialiser:
         element.attributes = self.deserialise_attributes(element_dict)
         return element
 
-    def deserialise(self, element_json):
+    def deserialise(self, element_json: str) -> Element:
+        """
+        Deserialises the given JSON into an element.
+        """
+
         return self.deserialise_dict(json.loads(element_json))
+
+
+class LegacyJSONDeserialiser(JSONDeserialiser):
+    """
+    Deserialiser for Refract 0.6.0 and below.
+    """
+
+    def deserialise_dict(self, element_dict):
+        if isinstance(element_dict, str):
+            return Element('string', content=element_dict)
+
+        if isinstance(element_dict, (int, float)):
+            return Element('number', content=element_dict)
+
+        if isinstance(element_dict, list):
+            return Element('array', content=[self.deserialise_dict(e) for e in element_dict])
+
+        if isinstance(element_dict, dict) and 'key' not in element_dict and 'element' not in element_dict:
+            return Element('array', content=[self.deserialise_dict(e) for e in element_dict])
+
+        return super(LegacyJSONDeserialiser, self).deserialise_dict(element_dict)
+
+    def deserialise_content(self, element_dict):
+        if 'content' in element_dict and isinstance(element_dict['content'], dict):
+            content = element_dict['content']
+
+            if 'key' not in content and 'element' not in content and 'href' in content:
+                attributes = {}
+
+                if 'path' in content:
+                    attributes['path'] = String(content=content['path'])
+
+                return Element('elementPointer', attributes=attributes, content=content['href'])
+
+        return super(LegacyJSONDeserialiser, self).deserialise_content(element_dict)
