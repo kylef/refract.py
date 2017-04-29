@@ -4,8 +4,8 @@ from refract import Object, Member, String
 
 class ObjectTests(unittest.TestCase):
     def setUp(self):
-        self.key = String('title')
-        self.value = String('hello')
+        self.key = String(content='title')
+        self.value = String(content='hello')
         self.member = Member(key=self.key, value=self.value)
         self.object = Object(content=[self.member])
 
@@ -26,13 +26,25 @@ class ObjectTests(unittest.TestCase):
         value = self.object[self.key]
         self.assertEqual(value, self.value)
 
+    def test_getitem_nonrefracted(self):
+        value = self.object['title']
+        self.assertEqual(value, self.value)
+
     def test_del(self):
         del self.object[self.key]
+        self.assertEqual(len(self.object), 0)
+
+    def test_del_nonrefracted(self):
+        del self.object['title']
         self.assertEqual(len(self.object), 0)
 
     def test_contains(self):
         self.assertTrue(self.key in self.object)
         self.assertTrue(self.value not in self.object)
+
+    def test_contains_nonrefracted(self):
+        self.assertTrue('title' in self.object)
+        self.assertTrue('not title' not in self.object)
 
     def test_keys(self):
         self.assertEqual(self.object.keys(), [self.key])

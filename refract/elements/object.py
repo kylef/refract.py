@@ -28,7 +28,8 @@ class Member(Element):
 
     @key.setter
     def key(self, key: Element):
-        self.content = KeyValuePair(key=key, value=self.value)
+        from refract.refraction import refract
+        self.content = KeyValuePair(key=refract(key), value=self.value)
 
     @property
     def value(self) -> Element:
@@ -40,7 +41,8 @@ class Member(Element):
 
     @value.setter
     def value(self, value: Element):
-        self.content = KeyValuePair(key=self.key, value=value)
+        from refract.refraction import refract
+        self.content = KeyValuePair(key=self.key, value=refract(value))
 
 
 class Object(Element):
@@ -78,25 +80,28 @@ class Object(Element):
 
         return 0
 
-    def __getitem__(self, key: Element) -> Element:
+    def __getitem__(self, key) -> Element:
         """
         Returns the value for the given key
 
         >>> key = String(content='id')
         >>> value = String(content='Hello')
         >>> obj = Object(content=[Member(key=key, value=value)])
-        >>> obj[key]
+        >>> obj['id']
         String(content='Hello')
         """
 
         if self.content:
+            from refract.refraction import refract
+            refracted_key = refract(key)
+
             for member in self.content:
-                if member.content.key == key:
+                if member.key == refracted_key:
                     return member.content.value
 
         raise KeyError(key)
 
-    def __delitem__(self, key: Element):
+    def __delitem__(self, key):
         """
         Deletes the member for the given key
 
@@ -107,14 +112,17 @@ class Object(Element):
         """
 
         if self.content:
+            from refract.refraction import refract
+            refracted_key = refract(key)
+
             for member in self.content:
-                if member.content.key == key:
+                if member.key == refracted_key:
                     self.content.remove(member)
                     return
 
         raise KeyError(key)
 
-    def __contains__(self, key: Element) -> bool:
+    def __contains__(self, key) -> bool:
         """
         Returns whether the object contains the given key.
 
