@@ -13,11 +13,9 @@ class ParseResultTests(unittest.TestCase):
         self.parseResult.append(Annotation(content='warn!'))
         self.parseResult.append(Annotation(content='err!'))
 
-        self.parseResult[0].classes = Array(content=[String(content='api')])
-        self.parseResult[1].classes = Array(content=[
-            String(content='warning')
-        ])
-        self.parseResult[2].classes = Array(content=[String(content='error')])
+        self.parseResult[0].classes = ['api']
+        self.parseResult[1].classes = ['warning']
+        self.parseResult[2].classes = ['error']
 
     def test_element_name(self):
         self.assertEqual(self.parseResult.element, 'parseResult')

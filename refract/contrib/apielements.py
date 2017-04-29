@@ -15,8 +15,7 @@ namespace = Namespace()
 
 def has_class(class_name):
     def func(element):
-        classes = [c for c in element.classes if c.content == class_name]
-        return len(classes) > 0
+        return element.classes and class_name in element.classes
 
     return func
 
