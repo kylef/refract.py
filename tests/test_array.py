@@ -17,3 +17,19 @@ class ArrayTests(unittest.TestCase):
     def test_subscript(self):
         self.assertEqual(self.array[0], self.title)
         self.assertEqual(self.array[1], self.hello)
+
+    def test_del(self):
+        del self.array[0]
+        self.assertEqual(len(self.array), 1)
+
+    def test_append(self):
+        self.array.append(String(content='final'))
+        self.assertEqual(self.array[2].content, 'final')
+
+    def test_insert(self):
+        self.array.insert(0, String(content='final'))
+        self.assertEqual(self.array[0].content, 'final')
+
+    def test_index(self):
+        index = self.array.index(self.array[1])
+        self.assertEqual(index, 1)
