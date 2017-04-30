@@ -124,12 +124,8 @@ class JSONDeserialiser:
             )
 
         cls = self.registry.find_element_class(element_dict['element'])
-
-        if hasattr(cls, 'element'):
-            element = cls()
-        else:
-            element = cls(element_dict['element'])
-
+        element = cls()
+        element.element = element_dict['element']
         element.content = self.deserialise_content(element_dict)
         element.meta = self.deserialise_meta(element_dict)
         element.attributes = self.deserialise_attributes(element_dict)
