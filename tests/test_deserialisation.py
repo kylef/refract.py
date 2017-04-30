@@ -1,12 +1,12 @@
 import unittest
-from refract import (Namespace, Element, String, Number, Boolean, Null,
+from refract import (Registry, Element, String, Number, Boolean, Null,
                      Array, Member)
 from refract.json import JSONDeserialiser, CompactJSONDeserialiser
 
 
 class JSONDeserialisationTests(unittest.TestCase):
     def setUp(self):
-        self.deserialiser = JSONDeserialiser(Namespace())
+        self.deserialiser = JSONDeserialiser(Registry())
 
     def deserialise(self, element_dict):
         return self.deserialiser.deserialise_dict(element_dict)

@@ -3,15 +3,15 @@
 API Elements
 ============
 
-Python Refact contains a namespace for the `API Elements`_ Refract Profile
-which provide conviences around interacting with API Elements.
+Python Refact contains a registry for the `API Elements`_ Refract Profile which
+provide conviences around interacting with API Elements.
 
 .. code-block:: python
 
     from refract.json import JSONDeserialiser
-    from refract.contrib.apielements import namespace
+    from refract.contrib.apielements import registry
 
-    deserialiser = JSONDeserialiser(namespace=namespace)
+    deserialiser = JSONDeserialiser(registry=registry)
     parseResult = deserialiser.deserialise('{"element": "parseResult"}')
 
     if parseResult.errors:

@@ -2,6 +2,10 @@
 
 ## Master
 
+### Breaking
+
+- Namespace has been renamed to Registry.
+
 ### Enhancements
 
 - Added a compact JSON serialiser.
