@@ -1,5 +1,12 @@
 # Refract Python Changelog
 
+## Master
+
+### Enhancements
+
+- Added a compact JSON serialiser.
+- Added a compact JSON deserialiser.
+
 ## 0.2.0 (2016-04-29)
 
 ### Enhancements

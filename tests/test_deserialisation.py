@@ -1,9 +1,10 @@
 import unittest
-from refract import Namespace, Element, String, Number, Boolean, Null, Array
-from refract.json import JSONDeserialiser
+from refract import (Namespace, Element, String, Number, Boolean, Null,
+                     Array, Member)
+from refract.json import JSONDeserialiser, CompactJSONDeserialiser
 
 
-class DeserialisationTests(unittest.TestCase):
+class JSONDeserialisationTests(unittest.TestCase):
     def setUp(self):
         self.deserialiser = JSONDeserialiser(Namespace())
 
@@ -236,3 +237,70 @@ class DeserialisationTests(unittest.TestCase):
         self.assertIsInstance(test_element, Element)
         self.assertEqual(test_element.element, 'string')
         self.assertEqual(test_element.content, 'Hello')
+
+
+class CompactJSONDeserialisationTests(unittest.TestCase):
+    def setUp(self):
+        self.deserialiser = CompactJSONDeserialiser()
+
+    def test_deserialise_primitive_element(self):
+        payload = '["string", null, null, "Hello"]'
+        element = self.deserialiser.deserialise(payload)
+
+        self.assertIsInstance(element, String)
+        self.assertEqual(element.content, 'Hello')
+
+    def test_deserialise_element_element(self):
+        payload = '["thing", null, null, ["string", null, null, "Hello"]]'
+        element = self.deserialiser.deserialise(payload)
+
+        self.assertIsInstance(element, Element)
+        self.assertEqual(element.element, 'thing')
+
+        subelement = element.content
+        self.assertIsInstance(subelement, String)
+        self.assertEqual(subelement.content, 'Hello')
+
+    def test_deserialise_array_element(self):
+        payload = '["thing", null, null, [["string", null, null, "Hello"]]]'
+        element = self.deserialiser.deserialise(payload)
+
+        self.assertIsInstance(element, Element)
+        self.assertEqual(element.element, 'thing')
+
+        content = element.content
+        self.assertIsInstance(content, list)
+        self.assertIsInstance(content[0], String)
+        self.assertEqual(content[0].content, 'Hello')
+
+    def test_deserialise_key_value_pair(self):
+        payload = '["member", null, null, ["pair", ["string", null, null, ' \
+                  '"id"], ["string", null, null, "Test"]]]'
+        element = self.deserialiser.deserialise(payload)
+
+        self.assertIsInstance(element, Member)
+        self.assertEqual(element.element, 'member')
+
+        self.assertIsInstance(element.key, String)
+        self.assertEqual(element.key.content, 'id')
+
+        self.assertIsInstance(element.value, String)
+        self.assertEqual(element.value.content, 'Test')
+
+    def test_deserialise_metadata(self):
+        payload = '["string", {"title": ["string", null, null, "Test"]}' \
+                  ', null, "Hello"]'
+        element = self.deserialiser.deserialise(payload)
+
+        self.assertIsInstance(element, String)
+        self.assertEqual(element.content, 'Hello')
+        self.assertEqual(element.title.content, 'Test')
+
+    def test_deserialise_attributes(self):
+        payload = '["string", null, {"title": ' \
+                  '["string", null, null, "Test"]}, "Hello"]'
+        element = self.deserialiser.deserialise(payload)
+
+        self.assertIsInstance(element, String)
+        self.assertEqual(element.content, 'Hello')
+        self.assertEqual(element.attributes, {'title': String(content='Test')})
