@@ -28,17 +28,51 @@ class Metadata:
         )
 
 
+class Attributes:
+    def __init__(self):
+        self.attributes = {}
+
+    def __eq__(self, other):
+        if not isinstance(other, Attributes):
+            return False
+
+        return self.attributes == other.attributes
+
+    def __len__(self):
+        return self.attributes.__len__()
+
+    def __getitem__(self, item):
+        return self.attributes.__getitem__(item)
+
+    def __setitem__(self, item, value):
+        from refract.refraction import refract
+        value = refract(value)
+        self.attributes.__setitem__(item, value)
+
+    def items(self):
+        return self.attributes.items()
+
+    def keys(self):
+        return self.attributes.keys()
+
+    def values(self):
+        return self.attributes.values()
+
+    def get(self, *args, **kwargs):
+        return self.attributes.get(*args, **kwargs)
+
+
 class Element(object):
     """
     Base Refract Element
     """
 
     def __init__(self, element: str = None, meta: Metadata = None,
-                 attributes = None, content=None) -> None:
+                 attributes: Attributes = None, content=None) -> None:
         if element and not hasattr(self, 'element'):
             self.element = element
         self.meta = meta or Metadata()
-        self.attributes = attributes or {}
+        self.attributes = attributes or Attributes()
         self.content = content
 
     def __repr__(self):

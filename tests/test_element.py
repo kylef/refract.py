@@ -63,6 +63,15 @@ class ElementTests(unittest.TestCase):
         ])
         self.assertEqual(element.defract, {'key': 'value'})
 
+    #
+
+    def test_setting_attributes(self):
+        element = Element()
+        element.attributes['key'] = 'value'
+
+        self.assertIsInstance(element.attributes['key'], String)
+        self.assertEqual(element.attributes['key'].content, 'value')
+
     # Children
 
     def test_children_string(self):
