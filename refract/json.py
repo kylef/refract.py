@@ -46,7 +46,7 @@ class JSONSerialiser:
                     for (k, v) in element.attributes.items()]
             )
 
-        if element.content or element.element == "null":
+        if element.content is not None or element.element == "null":
             if isinstance(element.content, KeyValuePair):
                 content = {}
 
