@@ -176,14 +176,14 @@ class JSONSerialisationTests(unittest.TestCase):
         })
 
     def test_serialise_meta_ref(self):
-        pointer = Element('elementPointer', content='Test')
+        pointer = Element('ref', content='Test')
         element = Element('string', meta=Metadata(ref=pointer))
 
         self.assertEqual(self.serialise(element), {
             'element': 'string',
             'meta': {
                 'ref': {
-                    'element': 'elementPointer',
+                    'element': 'ref',
                     'content': 'Test'
                 }
             }

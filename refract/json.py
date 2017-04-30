@@ -181,7 +181,7 @@ class LegacyJSONDeserialiser(JSONDeserialiser):
                     attributes['path'] = String(content=content['path'])
 
                 return Element(
-                    'elementPointer',
+                    'ref',
                     attributes=attributes,
                     content=content['href']
                 )

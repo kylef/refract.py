@@ -210,7 +210,7 @@ class JSONDeserialisationTests(unittest.TestCase):
             'element': 'string',
             'meta': {
                 'ref': {
-                    'element': 'elementPointer',
+                    'element': 'ref',
                     'content': 'Test'
                 }
             }
@@ -218,7 +218,7 @@ class JSONDeserialisationTests(unittest.TestCase):
 
         self.assertIsInstance(element, Element)
         self.assertIsInstance(element.ref, Element)
-        self.assertEqual(element.ref.element, 'elementPointer')
+        self.assertEqual(element.ref.element, 'ref')
         self.assertEqual(element.ref.content, 'Test')
 
     def test_deserialise_attributes(self):
