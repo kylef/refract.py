@@ -4,13 +4,13 @@ from refract.registry import Registry
 from refract.elements import Element, Metadata, KeyValuePair, String
 
 
+META_KEYS = ('id', 'title', 'description', 'classes', 'links', 'ref')
+
+
 class JSONSerialiser:
     """
     JSON Refract Serialiser
     """
-
-    def __init__(self):
-        pass
 
     def serialise_dict(self, element):
         element_dict = {
@@ -19,23 +19,10 @@ class JSONSerialiser:
 
         meta = {}
 
-        if element.meta.id:
-            meta['id'] = self.serialise_dict(element.meta.id)
-
-        if element.meta.title:
-            meta['title'] = self.serialise_dict(element.meta.title)
-
-        if element.meta.description:
-            meta['description'] = self.serialise_dict(element.meta.description)
-
-        if element.meta.classes:
-            meta['classes'] = self.serialise_dict(element.meta.classes)
-
-        if element.meta.links:
-            meta['links'] = self.serialise_dict(element.meta.links)
-
-        if element.meta.ref:
-            meta['ref'] = self.serialise_dict(element.meta.ref)
+        for key in META_KEYS:
+            value = getattr(element.meta, key, None)
+            if value:
+                meta[key] = self.serialise_dict(value)
 
         if meta:
             element_dict['meta'] = meta
@@ -92,31 +79,10 @@ class JSONDeserialiser:
         meta = Metadata()
 
         if 'meta' in element_dict:
-            if 'id' in element_dict['meta']:
-                meta.id = self.deserialise_dict(element_dict['meta']['id'])
-
-            if 'title' in element_dict['meta']:
-                meta.title = self.deserialise_dict(
-                    element_dict['meta']['title']
-                )
-
-            if 'description' in element_dict['meta']:
-                meta.description = self.deserialise_dict(
-                    element_dict['meta']['description']
-                )
-
-            if 'ref' in element_dict['meta']:
-                meta.ref = self.deserialise_dict(element_dict['meta']['ref'])
-
-            if 'classes' in element_dict['meta']:
-                meta.classes = self.deserialise_dict(
-                    element_dict['meta']['classes']
-                )
-
-            if 'links' in element_dict['meta']:
-                meta.links = self.deserialise_dict(
-                    element_dict['meta']['links']
-                )
+            for key in META_KEYS:
+                value = element_dict['meta'].get(key, None)
+                if value:
+                    setattr(meta, key, self.deserialise_dict(value))
 
         return meta
 
@@ -233,7 +199,7 @@ class CompactJSONSerialiser:
     def serialise_meta(self, meta: Metadata):
         metadata = {}
 
-        for key in ('id', 'title', 'description', 'classes', 'links', 'ref'):
+        for key in META_KEYS:
             value = getattr(meta, key, None)
             if value:
                 metadata[key] = self.serialise_element(value)
@@ -290,7 +256,7 @@ class CompactJSONDeserialiser:
     def deserialise_meta(self, meta) -> Metadata:
         metadata = Metadata()
 
-        for key in ('id', 'title', 'description', 'classes', 'links', 'ref'):
+        for key in META_KEYS:
             if meta and key in meta:
                 element = self.deserialise_element(meta[key])
                 setattr(metadata, key, element)
