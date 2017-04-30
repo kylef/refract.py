@@ -4,7 +4,7 @@ from refract.elements.array import Array
 from refract.elements.object import Member, Object
 
 __all__ = [
-    'Element', 'Metadata', 'KeyValuePair',
+    'Element', 'Metadata', 'Attributes', 'KeyValuePair',
     'String', 'Number', 'Boolean', 'Null',
     'Array',
     'Member', 'Object',

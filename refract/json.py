@@ -1,7 +1,8 @@
 import json
 
 from refract.registry import Registry
-from refract.elements import Element, Attributes, Metadata, KeyValuePair, String
+from refract.elements import (Element, Attributes, Metadata, KeyValuePair,
+                              String)
 
 
 META_KEYS = ('id', 'title', 'description', 'classes', 'links', 'ref')
