@@ -1,7 +1,7 @@
 import json
 
 from refract.registry import Registry
-from refract.elements import Element, Metadata, KeyValuePair, String
+from refract.elements import Element, Attributes, Metadata, KeyValuePair, String
 
 
 META_KEYS = ('id', 'title', 'description', 'classes', 'links', 'ref')
@@ -203,7 +203,7 @@ class CompactJSONSerialiser:
         if metadata:
             return metadata
 
-    def serialise_attributes(self, attributes: dict):
+    def serialise_attributes(self, attributes: Attributes):
         if attributes:
             return dict([(k, self.serialise_content(v))
                          for (k, v) in attributes.items()])
