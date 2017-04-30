@@ -1,5 +1,5 @@
-from refract.elements import (Number, String, Boolean, Null, Member,
-                              Array, Object)
+from refract.elements import (Element, Number, String, Boolean, Null,
+                              Member, Array, Object)
 
 
 class Registry(object):
@@ -35,3 +35,23 @@ class Registry(object):
 
         self.elements.append(element)
         return element
+
+    def find_element_class(self, element_name):
+        """
+        Finds an element class for the given element name contained within the
+        registry.
+
+        Returns Element when there is no matching element subclass.
+
+        >>> registry.find_element_class('string')
+        String
+
+        >>> registry.find_element_class('unknown')
+        Element
+        """
+
+        for element in self.elements:
+            if element.element == element_name:
+                return element
+
+        return Element

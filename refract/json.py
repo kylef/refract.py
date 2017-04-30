@@ -88,13 +88,6 @@ class JSONDeserialiser:
     def __init__(self, registry: Registry=None) -> None:
         self.registry = registry or Registry()
 
-    def find_element_class(self, element_name):
-        for element in self.registry.elements:
-            if element.element == element_name:
-                return element
-
-        return Element
-
     def deserialise_meta(self, element_dict):
         meta = Metadata()
 
@@ -164,7 +157,7 @@ class JSONDeserialiser:
                 'Given element does not contain an element property'
             )
 
-        cls = self.find_element_class(element_dict['element'])
+        cls = self.registry.find_element_class(element_dict['element'])
 
         if hasattr(cls, 'element'):
             element = cls()
@@ -294,13 +287,6 @@ class CompactJSONDeserialiser:
     def __init__(self, registry: Registry=None) -> None:
         self.registry = registry or Registry()
 
-    def find_element_class(self, element_name):
-        for element in self.registry.elements:
-            if element.element == element_name:
-                return element
-
-        return Element
-
     def deserialise_meta(self, meta) -> Metadata:
         metadata = Metadata()
 
@@ -323,7 +309,7 @@ class CompactJSONDeserialiser:
             raise ValueError('Given element is not tuple of 4')
 
         element_name = source[0]
-        element_cls = self.find_element_class(element_name)
+        element_cls = self.registry.find_element_class(element_name)
         meta = self.deserialise_meta(source[1])
         attributes = self.deserialise_attributes(source[2])
         element = element_cls(meta=meta, attributes=attributes)
