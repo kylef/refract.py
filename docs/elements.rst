@@ -53,3 +53,9 @@ Member
 
 .. autoclass:: Member
    :members:
+
+Element Registry
+----------------
+
+.. autoclass:: refract.registry.Registry
+   :members:

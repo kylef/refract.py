@@ -1,6 +1,6 @@
 import json
 
-from refract.namespace import Namespace
+from refract.registry import Registry
 from refract.elements import Element, Metadata, KeyValuePair, String
 
 
@@ -85,11 +85,11 @@ class JSONDeserialiser:
     JSON Refract Deserialiser
     """
 
-    def __init__(self, namespace: Namespace=None) -> None:
-        self.namespace = namespace or Namespace()
+    def __init__(self, registry: Registry=None) -> None:
+        self.registry = registry or Registry()
 
     def find_element_class(self, element_name):
-        for element in self.namespace.elements:
+        for element in self.registry.elements:
             if element.element == element_name:
                 return element
 
@@ -291,11 +291,11 @@ class CompactJSONDeserialiser:
     JSON Refract Deserialiser
     """
 
-    def __init__(self, namespace: Namespace=None) -> None:
-        self.namespace = namespace or Namespace()
+    def __init__(self, registry: Registry=None) -> None:
+        self.registry = registry or Registry()
 
     def find_element_class(self, element_name):
-        for element in self.namespace.elements:
+        for element in self.registry.elements:
             if element.element == element_name:
                 return element
 

@@ -1,16 +1,19 @@
 from typing import List
 
 from refract.elements import Array, String, Number
-from refract.namespace import Namespace
+from refract.registry import Registry
 
 
 __all__ = [
-    'namespace', 'ParseResult', 'Annotation', 'Category', 'Copy', 'Resource',
+    'registry', 'ParseResult', 'Annotation', 'Category', 'Copy', 'Resource',
     'Transition', 'HTTPTransaction', 'HTTPRequest', 'HTTPResponse', 'Asset'
 ]
 
 
-namespace = Namespace()
+"""
+Refract Registry containing all of the API Element subclasses.
+"""
+registry = Registry()
 
 
 def has_class(class_name):
@@ -27,17 +30,17 @@ def is_element(element_cls):
     return func
 
 
-@namespace.register
+@registry.register
 class Annotation(String):
     element = 'annotation'
 
 
-@namespace.register
+@registry.register
 class Copy(String):
     element = 'copy'
 
 
-@namespace.register
+@registry.register
 class Asset(String):
     element = 'asset'
 
@@ -87,7 +90,7 @@ class HTTPMessage(Array):
         return next(filter(has_class('messageBodySchema'), self.assets))
 
 
-@namespace.register
+@registry.register
 class HTTPRequest(HTTPMessage):
     element = 'httpRequest'
 
@@ -100,7 +103,7 @@ class HTTPRequest(HTTPMessage):
         return self.attributes.get('method', None)
 
 
-@namespace.register
+@registry.register
 class HTTPResponse(HTTPMessage):
     element = 'httpResponse'
 
@@ -113,7 +116,7 @@ class HTTPResponse(HTTPMessage):
         return self.attributes.get('statusCode', None)
 
 
-@namespace.register
+@registry.register
 class HTTPTransaction(Array):
     element = 'httpTransaction'
 
@@ -134,7 +137,7 @@ class HTTPTransaction(Array):
         return next(filter(is_element(HTTPResponse), self.content))
 
 
-@namespace.register
+@registry.register
 class Transition(Array):
     element = 'transition'
 
@@ -147,7 +150,7 @@ class Transition(Array):
         return list(filter(is_element(HTTPTransaction), self.content))
 
 
-@namespace.register
+@registry.register
 class Resource(Array):
     element = 'resource'
 
@@ -160,7 +163,7 @@ class Resource(Array):
         return list(filter(is_element(Transition), self.content))
 
 
-@namespace.register
+@registry.register
 class Category(Array):
     element = 'category'
 
@@ -191,7 +194,7 @@ class Category(Array):
         return list(filter(is_element(Transition), self.children))
 
 
-@namespace.register
+@registry.register
 class ParseResult(Array):
     element = 'parseResult'
 
