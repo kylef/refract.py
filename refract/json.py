@@ -2,7 +2,7 @@ import json
 
 from refract.registry import Registry
 from refract.elements import (Element, Attributes, Metadata, KeyValuePair,
-                              String, Array, Object)
+                              String, Array)
 from refract.refraction import refract
 
 
