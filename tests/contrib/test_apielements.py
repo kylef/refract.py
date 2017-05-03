@@ -56,6 +56,7 @@ class ResourceTests(unittest.TestCase):
         self.resource = Resource(content=[
             Transition()
         ])
+        self.resource.attributes['href'] = '/example'
 
     def test_element_name(self):
         self.assertEqual(self.resource.element, 'resource')
@@ -63,6 +64,13 @@ class ResourceTests(unittest.TestCase):
     def test_transitions(self):
         self.assertEqual(len(self.resource.transitions), 1)
         self.assertIsInstance(self.resource.transitions[0], Transition)
+
+    def test_href(self):
+        self.assertEqual(self.resource.href.defract, '/example')
+
+    def test_href_setter(self):
+        self.resource.href = '/examples'
+        self.assertEqual(self.resource.attributes['href'].defract, '/examples')
 
 
 class TransitionTests(unittest.TestCase):

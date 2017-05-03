@@ -1,5 +1,13 @@
 # Refract Python Changelog
 
+## Master
+
+### Enhancements
+
+- Added convenience accessors `href` to Resource, Transition, HTTPRequest
+  elements.
+
+
 ## 0.3.0 (2017-05-03)
 
 ### Breaking

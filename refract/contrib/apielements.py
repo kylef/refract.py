@@ -30,6 +30,16 @@ def is_element(element_cls):
     return func
 
 
+class HrefMixin:
+    @property
+    def href(self):
+        return self.attributes['href']
+
+    @href.setter
+    def href(self, new_value):
+        self.attributes['href'] = new_value
+
+
 @registry.register
 class Annotation(String):
     element = 'annotation'
@@ -91,7 +101,7 @@ class HTTPMessage(Array):
 
 
 @registry.register
-class HTTPRequest(HTTPMessage):
+class HTTPRequest(HTTPMessage, HrefMixin):
     element = 'httpRequest'
 
     @property
@@ -138,7 +148,7 @@ class HTTPTransaction(Array):
 
 
 @registry.register
-class Transition(Array):
+class Transition(Array, HrefMixin):
     element = 'transition'
 
     @property
@@ -151,7 +161,7 @@ class Transition(Array):
 
 
 @registry.register
-class Resource(Array):
+class Resource(Array, HrefMixin):
     element = 'resource'
 
     @property
