@@ -15,8 +15,13 @@ class ElementTests(unittest.TestCase):
 
         element = Element('array', content=[String('Hello World')])
 
-        desc = "<Element(array) content=[<Element(string) content=None>]>"
+        desc = "<Element(array) content=[<String content=None>]>"
         self.assertEqual(repr(element), desc)
+
+    def test_repr_subclass(self):
+        element = String(content='Hello World')
+        self.assertEqual(repr(element),
+                         "<String content='Hello World'>")
 
     def test_equality(self):
         element1 = Element('string', content='Hello')

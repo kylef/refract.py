@@ -76,12 +76,14 @@ class Element(object):
         self.content = content
 
     def __repr__(self):
-        if isinstance(self.content, Element):
-            return "<Element({}) content={}>".format(self.element, 'Element')
+        cls = str(self.__class__.__name__)
+        if cls == 'Element':
+            cls = 'Element({})'.format(self.element)
 
-        return "<Element({}) content={}>".format(
-            self.element, repr(self.content)
-        )
+        if isinstance(self.content, Element):
+            return "<{} content={}>".format(cls, 'Element')
+
+        return "<{} content={}>".format(cls, repr(self.content))
 
     def __eq__(self, other):
         if not isinstance(other, Element):

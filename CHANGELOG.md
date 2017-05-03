@@ -10,6 +10,8 @@
 
 - Added a compact JSON serialiser.
 - Added a compact JSON deserialiser.
+- Elements repr will now use an elements class name if the element is a
+  subclass.
 
 ## 0.2.0 (2016-04-29)
 
