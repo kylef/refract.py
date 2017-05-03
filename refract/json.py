@@ -2,7 +2,8 @@ import json
 
 from refract.registry import Registry
 from refract.elements import (Element, Attributes, Metadata, KeyValuePair,
-                              String)
+                              String, Array, Object)
+from refract.refraction import refract
 
 
 META_KEYS = ('id', 'title', 'description', 'classes', 'links', 'ref')
@@ -150,20 +151,17 @@ class LegacyJSONDeserialiser(JSONDeserialiser):
     """
 
     def deserialise_dict(self, element_dict):
-        if isinstance(element_dict, str):
-            return String(content=element_dict)
-
-        if isinstance(element_dict, (int, float)):
-            return Element('number', content=element_dict)
+        if isinstance(element_dict, (int, str, float)):
+            return refract(element_dict)
 
         if isinstance(element_dict, list):
-            return Element('array', content=[self.deserialise_dict(e)
-                                             for e in element_dict])
+            return Array(content=[self.deserialise_dict(e)
+                                  for e in element_dict])
 
         if isinstance(element_dict, dict) and 'key' not in element_dict \
                 and 'element' not in element_dict:
-            return Element('array', content=[self.deserialise_dict(e)
-                                             for e in element_dict])
+            return Array(content=[self.deserialise_dict(e)
+                                  for e in element_dict])
 
         return super(LegacyJSONDeserialiser, self).deserialise_dict(
             element_dict
