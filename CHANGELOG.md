@@ -1,6 +1,6 @@
 # Refract Python Changelog
 
-## Master
+## 0.3.0 (2017-05-03)
 
 ### Breaking
 
@@ -13,7 +13,7 @@
 - Elements repr will now use an elements class name if the element is a
   subclass.
 
-## 0.2.0 (2016-04-29)
+## 0.2.0 (2017-04-29)
 
 ### Enhancements
 
