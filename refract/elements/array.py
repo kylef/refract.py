@@ -51,6 +51,7 @@ class Array(Element):
         >>> del array[0]
         """
 
+        self.content[index].parent = None
         del self.content[index]
 
     def __contains__(self, element) -> bool:
@@ -66,7 +67,9 @@ class Array(Element):
         """
 
         from refract.refraction import refract
-        self.content.append(refract(element))
+        element = refract(element)
+        element.parent = self
+        self.content.append(element)
 
     def insert(self, index: int, element):
         """
@@ -77,7 +80,9 @@ class Array(Element):
         """
 
         from refract.refraction import refract
-        self.content.insert(index, refract(element))
+        element = refract(element)
+        element.parent = self
+        self.content.insert(index, element)
 
     def index(self, element: Element) -> int:
         """
@@ -97,5 +102,8 @@ class Array(Element):
         """
         Removes all the elements from the array.
         """
+
+        for element in self.content:
+            element.parent = None
 
         self.content.clear()

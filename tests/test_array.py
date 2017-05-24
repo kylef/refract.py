@@ -27,6 +27,10 @@ class ArrayTests(unittest.TestCase):
         del self.array[0]
         self.assertEqual(len(self.array), 1)
 
+    def test_del_unsets_parent(self):
+        del self.array[0]
+        self.assertIsNone(self.title.parent)
+
     def test_contains(self):
         self.assertTrue(self.title in self.array)
         self.assertTrue(String(content='test') not in self.array)
@@ -35,16 +39,32 @@ class ArrayTests(unittest.TestCase):
         self.assertTrue('title' in self.array)
 
     def test_append(self):
-        self.array.append(String(content='final'))
+        element = String(content='final')
+        self.array.append(element)
+
         self.assertEqual(self.array[2].content, 'final')
+
+    def test_append_sets_parent(self):
+        element = String(content='final')
+        self.array.append(element)
+
+        self.assertEqual(element.parent, self.array)
 
     def test_append_nonrefracted(self):
         self.array.append('final')
         self.assertEqual(self.array[2].content, 'final')
 
     def test_insert(self):
-        self.array.insert(0, String(content='final'))
+        element = String(content='final')
+        self.array.insert(0, element)
+
         self.assertEqual(self.array[0].content, 'final')
+
+    def test_insert_sets_parent(self):
+        element = String(content='final')
+        self.array.insert(0, element)
+
+        self.assertEqual(element.parent, self.array)
 
     def test_insert_nonrefracted(self):
         self.array.insert(0, 'final')
@@ -57,3 +77,7 @@ class ArrayTests(unittest.TestCase):
     def test_clear(self):
         self.array.clear()
         self.assertEqual(len(self.array), 0)
+
+    def test_clear_unsets_parent(self):
+        self.array.clear()
+        self.assertIsNone(self.title.parent)

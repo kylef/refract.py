@@ -38,6 +38,11 @@ class ObjectTests(unittest.TestCase):
         del self.object['title']
         self.assertEqual(len(self.object), 0)
 
+    def test_del_clears_member_parent(self):
+        del self.object[self.key]
+        self.assertEqual(len(self.object), 0)
+        self.assertIsNone(self.member.parent)
+
     def test_contains(self):
         self.assertTrue(self.key in self.object)
         self.assertTrue(self.value not in self.object)

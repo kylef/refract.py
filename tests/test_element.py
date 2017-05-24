@@ -8,6 +8,10 @@ class ElementTests(unittest.TestCase):
         self.assertEqual(element.element, 'string')
         self.assertEqual(element.content, 'Hello World')
 
+    def test_no_parent(self):
+        element = Element('string', content='Hello World')
+        self.assertIsNone(element.parent)
+
     def test_repr(self):
         element = Element('string', content='Hello World')
         self.assertEqual(repr(element),
@@ -76,6 +80,62 @@ class ElementTests(unittest.TestCase):
 
         self.assertIsInstance(element.attributes['key'], String)
         self.assertEqual(element.attributes['key'].content, 'value')
+
+    # Parents
+
+    def test_setting_subelement_parent(self):
+        one = Element(element='string', content='one')
+        two = Element(element='thing', content=one)
+
+        self.assertEqual(one.parent, two)
+
+    def test_setting_subelements_parent(self):
+        one = Element(element='string', content='one')
+        two = Element(element='thing', content=[one])
+
+        self.assertEqual(one.parent, two)
+
+    def test_setting_keyvalue_parent(self):
+        key = Element(element='string', content='key')
+        value = Element(element='string', content='value')
+        pair = KeyValuePair(key=key, value=value)
+
+        element = Element(element='thing', content=pair)
+
+        self.assertEqual(key.parent, element)
+        self.assertEqual(value.parent, element)
+
+    def test_reusing_element(self):
+        thing = Element(element='string', content='thing')
+        element = Element(element='thing', content=thing)
+
+        with self.assertRaises(Exception):
+            Element(element='thing', content=thing)
+
+    def test_unsets_parent_of_element(self):
+        element = Element(element='string', content='one')
+        parent = Element(element='thing', content=element)
+        parent.content = None
+
+        self.assertIsNone(element.parent)
+
+    def test_unsets_parent_of_elements(self):
+        element = Element(element='string', content='one')
+        parent = Element(element='thing', content=[element])
+        parent.content = None
+
+        self.assertIsNone(element.parent)
+
+    def test_unsets_parent_of_keyvaluepair(self):
+        key = Element(element='string', content='key')
+        value = Element(element='string', content='value')
+        pair = KeyValuePair(key=key, value=value)
+        parent = Element(element='thing', content=pair)
+
+        parent.content = None
+
+        self.assertIsNone(key.parent)
+        self.assertIsNone(value.parent)
 
     # Children
 

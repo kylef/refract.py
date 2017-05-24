@@ -11,6 +11,7 @@
 
 - Added convenience accessors `href` to Resource, Transition, HTTPRequest
   elements.
+- Elements now contain a `parent` property to access the parent of the element.
 
 
 ## 0.3.0 (2017-05-03)

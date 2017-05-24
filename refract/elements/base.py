@@ -74,6 +74,7 @@ class Element(object):
         self.meta = meta or Metadata()
         self.attributes = attributes or Attributes()
         self.content = content
+        self.parent = None
 
     def __repr__(self):
         cls = str(self.__class__.__name__)
@@ -184,6 +185,50 @@ class Element(object):
         self.meta.classes = refract(new_value)
 
     #
+
+    @property
+    def parent(self):
+        return self._parent
+
+    @parent.setter
+    def parent(self, new_parent):
+        if new_parent and self.parent:
+            raise Exception('Cannot set parent, element already has parent')
+
+        self._parent = new_parent
+
+    @property
+    def content(self):
+        return self._content
+
+    @content.setter
+    def content(self, new_value):
+        if getattr(self, '_content', None):
+            if isinstance(self._content, Element):
+                self._content.parent = None
+            elif isinstance(self._content, KeyValuePair):
+                if self._content.key:
+                    self._content.key.parent = None
+
+                if self._content.value:
+                    self._content.value.parent = None
+            elif isinstance(self._content, list):
+                for element in self._content:
+                    element.parent = None
+
+        if isinstance(new_value, Element):
+            new_value.parent = self
+        elif isinstance(new_value, KeyValuePair):
+            if new_value.key:
+                new_value.key.parent = self
+
+            if new_value.value:
+                new_value.value.parent = self
+        elif isinstance(new_value, list):
+            for value in new_value:
+                value.parent = self
+
+        self._content = new_value
 
     @property
     def children(self):

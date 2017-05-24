@@ -116,6 +116,7 @@ class Object(Element):
 
             for member in self.content:
                 if member.key == refracted_key:
+                    member.parent = None
                     self.content.remove(member)
                     return
 
