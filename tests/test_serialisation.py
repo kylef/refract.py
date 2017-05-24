@@ -1,5 +1,5 @@
 import unittest
-from refract.json import JSONSerialiser, CompactJSONSerialiser
+from refract.serialisation.json import JSONSerialiser, CompactJSONSerialiser
 from refract import (Element, String, Number, Boolean, Null, Array, Metadata,
                      KeyValuePair)
 

@@ -8,7 +8,7 @@ provide conviences around interacting with API Elements.
 
 .. code-block:: python
 
-    from refract.json import JSONDeserialiser
+    from refract.serialisers.json import JSONDeserialiser
     from refract.contrib.apielements import registry
 
     deserialiser = JSONDeserialiser(registry=registry)

@@ -1,7 +1,7 @@
 import unittest
 from refract import (Registry, Element, String, Number, Boolean, Null,
                      Array, Member)
-from refract.json import JSONDeserialiser, CompactJSONDeserialiser
+from refract.serialisation.json import JSONDeserialiser, CompactJSONDeserialiser
 
 
 class JSONDeserialisationTests(unittest.TestCase):

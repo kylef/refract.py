@@ -2,6 +2,11 @@
 
 ## Master
 
+### Breaking
+
+- JSON serialisers are moved into `refract.serialisers.json` module from
+  `refract.json`.
+
 ### Enhancements
 
 - Added convenience accessors `href` to Resource, Transition, HTTPRequest

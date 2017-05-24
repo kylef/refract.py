@@ -4,25 +4,25 @@ Serialisers
 JSONSerialiser
 --------------
 
-.. autoclass:: refract.json.JSONSerialiser
+.. autoclass:: refract.serialisers.json.JSONSerialiser
    :members:
 
 ComapctJSONSerialiser
 ----------------------
 
-.. autoclass:: refract.json.CompactJSONSerialiser
+.. autoclass:: refract.serialisers.json.CompactJSONSerialiser
    :members:
 
 JSONDeserialiser
 ----------------
 
-.. autoclass:: refract.json.JSONDeserialiser
+.. autoclass:: refract.serialisers.json.JSONDeserialiser
    :members:
 
 ComapctJSONDeserialiser
 ----------------------
 
-.. autoclass:: refract.json.CompactJSONDeserialiser
+.. autoclass:: refract.serialisers.json.CompactJSONDeserialiser
    :members:
 
 LegacyJSONDeserialiser
@@ -30,5 +30,5 @@ LegacyJSONDeserialiser
 
 .. warning:: Legacy deserialiser is deprecated.
 
-.. autoclass:: refract.json.LegacyJSONDeserialiser
+.. autoclass:: refract.serialisers.json.LegacyJSONDeserialiser
    :inherited-members:
