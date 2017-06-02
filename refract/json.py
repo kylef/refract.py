@@ -23,7 +23,7 @@ class JSONSerialiser:
 
         for key in META_KEYS:
             value = getattr(element.meta, key, None)
-            if value:
+            if value is not None:
                 meta[key] = self.serialise_dict(value)
 
         if meta:
@@ -39,10 +39,10 @@ class JSONSerialiser:
             if isinstance(element.content, KeyValuePair):
                 content = {}
 
-                if element.content.key:
+                if element.content.key is not None:
                     content['key'] = self.serialise_dict(element.content.key)
 
-                if element.content.value:
+                if element.content.value is not None:
                     content['value'] = self.serialise_dict(
                         element.content.value
                     )

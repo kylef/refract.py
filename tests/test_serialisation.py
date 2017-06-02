@@ -70,6 +70,32 @@ class JSONSerialisationTests(unittest.TestCase):
             ]
         })
 
+    def test_serialise_object_empty_value(self):
+        element = Element('object', content=[
+            Element('member', content=KeyValuePair(
+                key=Element('string', content='id'),
+                value=Array()
+            ))
+        ])
+        self.assertEqual(self.serialise(element), {
+            'element': 'object',
+            'content': [
+                {
+                    'element': 'member',
+                    'content': {
+                        'key': {
+                            'element': 'string',
+                            'content': 'id',
+                        },
+                        'value': {
+                            'element': 'array',
+                            'content': [],
+                        }
+                    }
+                }
+            ]
+        })
+
     def test_serialise_array(self):
         element = Element('array', content=[
             Element('string', content='Hello World')
@@ -151,6 +177,19 @@ class JSONSerialisationTests(unittest.TestCase):
                             'content': 'warning'
                         }
                     ]
+                }
+            }
+        })
+
+    def test_serialise_empty_meta(self):
+        element = Element('string', meta=Metadata(classes=Array(content=[])))
+
+        self.assertEqual(self.serialise(element), {
+            'element': 'string',
+            'meta': {
+                'classes': {
+                    'element': 'array',
+                    'content': []
                 }
             }
         })

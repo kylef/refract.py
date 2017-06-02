@@ -7,6 +7,11 @@
 - Added convenience accessors `href` to Resource, Transition, HTTPRequest
   elements.
 
+### Bug Fixes
+
+- JSON Serialise will now serialise empty arrays when they are found within a
+  key value pair or inside meta properties.
+
 
 ## 0.3.0 (2017-05-03)
 
