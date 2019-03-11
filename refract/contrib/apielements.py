@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Iterator
 
 from refract.elements import Array, String, Number
 from refract.registry import Registry
@@ -183,7 +183,7 @@ class Category(Array):
         Returns the resource group categories found within the category.
         """
 
-        categories = filter(is_element(Category), self.children)
+        categories: Iterator[Category] = filter(is_element(Category), self.children)
         resourceGroups = filter(has_class('resourceGroup'), categories)
         return list(resourceGroups)
 
@@ -238,6 +238,6 @@ class ParseResult(Array):
         Returns an API category found within the parse result.
         """
 
-        categories = filter(is_element(Category), self.children)
+        categories: Iterator[Category] = filter(is_element(Category), self.children)
         apis = filter(has_class('api'), categories)
         return next(apis)
