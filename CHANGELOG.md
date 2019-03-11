@@ -1,5 +1,12 @@
 # Refract Python Changelog
 
+## Master
+
+### Bug Fixes
+
+- JSON deserialisation will now deserialise attributes as Attributes object.  
+  [#4](https://github.com/kylef/refract.py/issues/4)
+
 ## 0.3.1 (2017-06-02)
 
 ### Enhancements

@@ -67,6 +67,10 @@ class Element(object):
     Base Refract Element
     """
 
+    element: str
+    meta: Metadata
+    attributes: Attributes
+
     def __init__(self, element: str = None, meta: Metadata = None,
                  attributes: Attributes = None, content=None) -> None:
         if element and not hasattr(self, 'element'):

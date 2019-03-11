@@ -1,4 +1,5 @@
 import json
+from typing import Optional
 
 from refract.registry import Registry
 from refract.elements import (Element, Attributes, Metadata, KeyValuePair,
@@ -77,7 +78,7 @@ class JSONDeserialiser:
     def __init__(self, registry: Registry=None) -> None:
         self.registry = registry or Registry()
 
-    def deserialise_meta(self, element_dict):
+    def deserialise_meta(self, element_dict) -> Metadata:
         meta = Metadata()
 
         if 'meta' in element_dict:
@@ -88,12 +89,14 @@ class JSONDeserialiser:
 
         return meta
 
-    def deserialise_attributes(self, element_dict):
+    def deserialise_attributes(self, element_dict) -> Attributes:
+        attributes = Attributes()
+
         if 'attributes' in element_dict:
-            return dict([(k, self.deserialise_dict(v))
+            attributes.attributes = dict([(k, self.deserialise_dict(v))
                          for (k, v) in element_dict['attributes'].items()])
 
-        return {}
+        return attributes
 
     def deserialise_content(self, element_dict):
         if 'content' in element_dict:
@@ -119,14 +122,14 @@ class JSONDeserialiser:
 
         return None
 
-    def deserialise_dict(self, element_dict):
+    def deserialise_dict(self, element_dict) -> Element:
         if 'element' not in element_dict:
             raise ValueError(
                 'Given element does not contain an element property'
             )
 
         cls = self.registry.find_element_class(element_dict['element'])
-        element = cls()
+        element: Element = cls()
         element.element = element_dict['element']
         element.content = self.deserialise_content(element_dict)
         element.meta = self.deserialise_meta(element_dict)
@@ -284,7 +287,7 @@ class CompactJSONDeserialiser:
                 key = self.deserialise_element(content[1])
 
                 if len(content) > 2:
-                    value = self.deserialise_element(content[2])
+                    value: Optional[Element] = self.deserialise_element(content[2])
                 else:
                     value = None
 
