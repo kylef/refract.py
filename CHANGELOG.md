@@ -2,6 +2,10 @@
 
 ## Master
 
+### Breaking
+
+- Python 3.5 support has been dropped.
+
 ### Bug Fixes
 
 - JSON deserialisation will now deserialise attributes as Attributes object.  
