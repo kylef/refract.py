@@ -6,4 +6,4 @@ install: pip install mypy flake8
 script:
   - mypy refract tests
   - python -m unittest discover -v
-  - flake8 refract tests --ignore=E251
+  - flake8 refract tests --ignore=W503

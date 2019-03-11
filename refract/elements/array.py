@@ -1,4 +1,4 @@
-from refract.elements.base import Element, Metadata
+from refract.elements.base import Element, Metadata, Attributes
 
 
 class Array(Element):
@@ -12,8 +12,8 @@ class Array(Element):
 
     element = 'array'
 
-    def __init__(self, meta: Metadata = None, attributes=None,
-                 content = None) -> None:
+    def __init__(self, meta: Metadata = None, attributes: Attributes = None,
+                 content=None) -> None:
         super(Array, self).__init__(meta=meta, attributes=attributes,
                                     content=[])
 

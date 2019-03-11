@@ -5,8 +5,8 @@ KeyValuePair = namedtuple('KeyValuePair', ['key', 'value'])
 
 
 class Metadata:
-    def __init__(self, id = None, title = None, description = None,
-                 classes = None, links = None, ref = None) -> None:
+    def __init__(self, id=None, title=None, description=None,
+                 classes=None, links=None, ref=None) -> None:
         self.id = id
         self.title = title
         self.description = description
@@ -19,12 +19,12 @@ class Metadata:
             return False
 
         return (
-            self.id == other.id and
-            self.title == other.title and
-            self.description == other.description and
-            self.classes == other.classes and
-            self.links == other.links and
-            self.ref == other.ref
+            self.id == other.id
+            and self.title == other.title
+            and self.description == other.description
+            and self.classes == other.classes
+            and self.links == other.links
+            and self.ref == other.ref
         )
 
 
@@ -94,10 +94,10 @@ class Element(object):
             return False
 
         return (
-            self.element == other.element and
-            self.meta == other.meta and
-            self.attributes == other.attributes and
-            self.content == other.content
+            self.element == other.element
+            and self.meta == other.meta
+            and self.attributes == other.attributes
+            and self.content == other.content
         )
 
     @property

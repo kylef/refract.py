@@ -1,6 +1,6 @@
 from typing import List
 
-from refract.elements.base import Element, Metadata, KeyValuePair
+from refract.elements.base import Element, Metadata, Attributes, KeyValuePair
 
 
 class Member(Element):
@@ -12,8 +12,8 @@ class Member(Element):
 
     element = 'member'
 
-    def __init__(self, meta: Metadata = None, attributes = None,
-                 key: Element=None, value: Element=None) -> None:
+    def __init__(self, meta: Metadata = None, attributes: Attributes = None,
+                 key: Element = None, value: Element = None) -> None:
         super(Member, self).__init__('member', meta=meta,
                                      attributes=attributes,
                                      content=KeyValuePair(key, value))
@@ -56,7 +56,7 @@ class Object(Element):
 
     element = 'object'
 
-    def __init__(self, meta: Metadata = None, attributes = None,
+    def __init__(self, meta: Metadata = None, attributes: Attributes = None,
                  content: List[Member] = None) -> None:
         super(Object, self).__init__(meta=meta, attributes=attributes)
 

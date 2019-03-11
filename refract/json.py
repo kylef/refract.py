@@ -75,7 +75,7 @@ class JSONDeserialiser:
     JSON Refract Deserialiser
     """
 
-    def __init__(self, registry: Registry=None) -> None:
+    def __init__(self, registry: Registry = None) -> None:
         self.registry = registry or Registry()
 
     def deserialise_meta(self, element_dict) -> Metadata:
@@ -93,8 +93,9 @@ class JSONDeserialiser:
         attributes = Attributes()
 
         if 'attributes' in element_dict:
-            attributes.attributes = dict([(k, self.deserialise_dict(v))
-                         for (k, v) in element_dict['attributes'].items()])
+            items = element_dict['attributes'].items()
+            attributes.attributes = dict(
+                [(k, self.deserialise_dict(v)) for (k, v) in items])
 
         return attributes
 
@@ -248,7 +249,7 @@ class CompactJSONDeserialiser:
     JSON Refract Deserialiser
     """
 
-    def __init__(self, registry: Registry=None) -> None:
+    def __init__(self, registry: Registry = None) -> None:
         self.registry = registry or Registry()
 
     def deserialise_meta(self, meta) -> Metadata:
@@ -286,8 +287,10 @@ class CompactJSONDeserialiser:
             elif len(content) > 1 and content[0] == 'pair':
                 key = self.deserialise_element(content[1])
 
+                value: Optional[Element]
+
                 if len(content) > 2:
-                    value: Optional[Element] = self.deserialise_element(content[2])
+                    value = self.deserialise_element(content[2])
                 else:
                     value = None
 
