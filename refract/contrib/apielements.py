@@ -209,7 +209,7 @@ class ParseResult(Array):
     element = 'parseResult'
 
     @property
-    def annotations(self):
+    def annotations(self) -> List[Annotation]:
         """
         Returns all of the annotations inside the parse result.
         """
@@ -217,7 +217,7 @@ class ParseResult(Array):
         return list(filter(is_element(Annotation), self.children))
 
     @property
-    def warnings(self):
+    def warnings(self) -> List[Annotation]:
         """
         Returns all of the warning annotations in the parse result.
         """
@@ -225,7 +225,7 @@ class ParseResult(Array):
         return list(filter(has_class('warning'), self.annotations))
 
     @property
-    def errors(self):
+    def errors(self) -> List[Annotation]:
         """
         Returns all of the error annotations in the parse result.
         """
