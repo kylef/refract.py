@@ -4,7 +4,7 @@ from setuptools import setup
 
 setup(
     name='refract',
-    version='0.3.1',
+    version='0.4.0',
     description='A Python library for interacting with Refract.',
     url='https://github.com/kylef/refract.py',
     packages=['refract', 'refract.elements', 'refract.contrib'],

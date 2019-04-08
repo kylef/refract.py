@@ -1,6 +1,6 @@
 # Refract Python Changelog
 
-## Master
+## 0.4.0 (2019-04-08)
 
 ### Breaking
 
